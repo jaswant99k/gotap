@@ -1,0 +1,425 @@
+﻿[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestBindJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestShouldBindJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestBindXML.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestShouldBindXML.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /users                    --> github.com/yourusername/goTap.TestBindQuery.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /users                    --> github.com/yourusername/goTap.TestShouldBindQuery.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestBindForm.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /upload                   --> github.com/yourusername/goTap.TestMultipartForm.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/:name           --> github.com/yourusername/goTap.TestBindUri.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.TestShouldBindUri.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestBindHeader.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestShouldBindHeader.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /product                  --> github.com/yourusername/goTap.TestValidationRequired.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /product                  --> github.com/yourusername/goTap.TestValidationMin.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /product                  --> github.com/yourusername/goTap.TestValidationEmail.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /product                  --> github.com/yourusername/goTap.TestValidationOneOf.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /product                  --> github.com/yourusername/goTap.TestValidationURL.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestShouldBind.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /login                    --> github.com/yourusername/goTap.TestBind.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextQuery.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextDefaultQuery.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestContextPostForm.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextSetGet.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextClientIP.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section --> github.com/yourusername/goTap.TestContextParam.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextHeader.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextStatus.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextNext.func3
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextAbort.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextIsAborted.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextCopy.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextAbortWithError.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextMustGet.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextGetHeader.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestContextGetRawData.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextCookie.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.TestContextFullPath.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextData.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextRedirect.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextFile.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextFileAttachment.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextQueryArray.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestContextDefaultPostForm.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestContextPostFormArray.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextDeadline.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextDone.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextErr.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextValue.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestShouldBindBodyWith.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /upload                   --> github.com/yourusername/goTap.TestMultipartFormSaving.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestEngineRun.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestEngineNoMethod.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestEngineRoutes.func1
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestEngineRoutes.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] DELETE /api/user/:id             --> github.com/yourusername/goTap.TestRouterGroupHTTPMethods.func1
+[goTap-debug] PATCH  /api/user/:id             --> github.com/yourusername/goTap.TestRouterGroupHTTPMethods.func2
+[goTap-debug] PUT    /api/user/:id             --> github.com/yourusername/goTap.TestRouterGroupHTTPMethods.func3
+[goTap-debug] OPTIONS /api/user/:id             --> github.com/yourusername/goTap.TestRouterGroupHTTPMethods.func4
+[goTap-debug] HEAD   /api/user/:id             --> github.com/yourusername/goTap.TestRouterGroupHTTPMethods.func5
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] POST   /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] PUT    /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] PATCH  /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] HEAD   /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] OPTIONS /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] DELETE /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] CONNECT /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] TRACE  /any                      --> github.com/yourusername/goTap.TestRouterGroupAny.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /file                     --> github.com/yourusername/goTap.(*RouterGroup).StaticFile.func1
+[goTap-debug] HEAD   /file                     --> github.com/yourusername/goTap.(*RouterGroup).StaticFile.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /static/*filepath         --> github.com/yourusername/goTap.(*RouterGroup).createStaticHandler.func1
+[goTap-debug] HEAD   /static/*filepath         --> github.com/yourusername/goTap.(*RouterGroup).createStaticHandler.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestLoadHTMLGlob.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestContextError.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestResponseWriterMethods.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestValidationLen.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestIPBlacklist.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestRateLimiterByUser.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /protected                --> github.com/yourusername/goTap.TestJWTAuthWithSecret.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzipFlush.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /panic                    --> github.com/yourusername/goTap.TestRecoveryWithPanic.func1
+
+
+[31m2025/12/10 07:12:27 [Recovery] 2025/12/10 - 07:12:27 panic recovered:
+GET /panic HTTP/1.1
+Host: example.com
+
+
+test panic
+C:/goTap/coverage_test.go:757 (0xd86764)
+	TestRecoveryWithPanic.func1: panic("test panic")
+C:/goTap/context.go:121 (0xd5026e)
+	(*Context).Next: c.handlers[c.index](c)
+C:/goTap/recovery.go:96 (0xd5025b)
+	CustomRecoveryWithWriter.func1: c.Next()
+C:/goTap/context.go:121 (0xd49541)
+	(*Context).Next: c.handlers[c.index](c)
+C:/goTap/gotap.go:203 (0xd4948d)
+	(*Engine).handleHTTPRequest: c.Next()
+C:/goTap/gotap.go:179 (0xd491b0)
+	(*Engine).ServeHTTP: engine.handleHTTPRequest(c)
+C:/goTap/coverage_test.go:762 (0xd6ae8d)
+	TestRecoveryWithPanic: engine.ServeHTTP(w, req)
+C:/Program Files/Go/src/testing/testing.go:1690 (0xa6c7ea)
+	tRunner: fn(t)
+C:/Program Files/Go/src/runtime/asm_amd64.s:1700 (0x99d9e0)
+	goexit: BYTE	$0x90	// NOP
+[0m
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestXMLBinding.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestFormPostBinding.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /api                      --> github.com/yourusername/goTap.TestRateLimiterByPath.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestRateLimiterByAPIKey.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestBurstRateLimiter.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestRequireAnyRole.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestFileFromFS.func1
+[goTap-debug] [ERROR] test error
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] [WARNING] Now goTap requires Go 1.21+.
+
+[goTap-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestSimpleRoute.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.TestRouteWithParams.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /files/*filepath          --> github.com/yourusername/goTap.TestWildcardRoute.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /v1/users                 --> github.com/yourusername/goTap.TestRouterGroup.func1
+[goTap-debug] GET    /v2/users                 --> github.com/yourusername/goTap.TestRouterGroup.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestMiddleware.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestAbort.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] POST   /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] PUT    /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] DELETE /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] PATCH  /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] OPTIONS /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] HEAD   /test                     --> github.com/yourusername/goTap.TestHTTPMethods.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestIndentedJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestSecureJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestSecureJSONWithCustomPrefix.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestSecureJSONWithNonArray.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestJSONP.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestJSONPWithoutCallback.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestJSONPWithXSSAttempt.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestAsciiJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestPureJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestPureJSONvsJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestPureJSONvsJSON.func2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestAbortWithStatusJSON.func1
+[goTap-debug] [WARNING] Headers were already written. Wanted to override status code 401 with 200
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestAbortWithStatusPureJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /admin/dashboard          --> github.com/yourusername/goTap.TestBasicAuth.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /api/data                 --> github.com/yourusername/goTap.TestBasicAuthForRealm.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /secure/data              --> github.com/yourusername/goTap.TestBasicAuthMalformedHeader.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user                     --> github.com/yourusername/goTap.TestBasicAuthContext.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestBasicAuthSecurityTimingAttack.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORS.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWithConfig.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWithConfig.func2.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWithConfig.func3.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWithConfig.func4.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWildcard.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSWithCustomFunc.func1.2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestCORSNoOriginHeader.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] POST   /api/transaction          --> github.com/yourusername/goTap.TestCORSPOSExample.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzip.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzip.func2.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzip.func3.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzipWithConfig.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzipWithConfig.func2.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /image.jpg                --> github.com/yourusername/goTap.TestGzipWithConfig.func3.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /api/download/file        --> github.com/yourusername/goTap.TestGzipWithConfig.func4.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /api/data                 --> github.com/yourusername/goTap.TestGzipJSON.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /api/transactions         --> github.com/yourusername/goTap.TestGzipPOSExample.func1.1
+[goTap-debug] GET    /api/receipt/download     --> github.com/yourusername/goTap.TestGzipPOSExample.func1.2
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestGzipCompressionRatio.func1.1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /protected                --> github.com/yourusername/goTap.TestJWTAuth.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestTransactionID.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestRateLimiter.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestIPWhitelist.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /admin                    --> github.com/yourusername/goTap.TestRequireRole.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /xml                      --> github.com/yourusername/goTap.TestXMLRendering.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /yaml                     --> github.com/yourusername/goTap.TestYAMLRendering.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /html                     --> github.com/yourusername/goTap.TestHTMLRendering.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /data                     --> github.com/yourusername/goTap.TestNegotiateJSON.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /data                     --> github.com/yourusername/goTap.TestNegotiateXML.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /events                   --> github.com/yourusername/goTap.TestSSE.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /test                     --> github.com/yourusername/goTap.TestNegotiateFormat.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /ping                     --> github.com/yourusername/goTap.BenchmarkSimpleRoute.func1
+goos: windows
+goarch: amd64
+pkg: github.com/yourusername/goTap
+cpu: 11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+BenchmarkSimpleRoute-8          	[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /ping                     --> github.com/yourusername/goTap.BenchmarkSimpleRoute.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /ping                     --> github.com/yourusername/goTap.BenchmarkSimpleRoute.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /ping                     --> github.com/yourusername/goTap.BenchmarkSimpleRoute.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /ping                     --> github.com/yourusername/goTap.BenchmarkSimpleRoute.func1
+ 2846172	       381.3 ns/op	      35 B/op	       2 allocs/op
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.BenchmarkOneParam.func1
+BenchmarkOneParam-8             	[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.BenchmarkOneParam.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.BenchmarkOneParam.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.BenchmarkOneParam.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id                 --> github.com/yourusername/goTap.BenchmarkOneParam.func1
+ 4479990	       346.5 ns/op	      31 B/op	       2 allocs/op
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section/item/:item/action/:action --> github.com/yourusername/goTap.BenchmarkFiveParams.func1
+BenchmarkFiveParams-8           	[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section/item/:item/action/:action --> github.com/yourusername/goTap.BenchmarkFiveParams.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section/item/:item/action/:action --> github.com/yourusername/goTap.BenchmarkFiveParams.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section/item/:item/action/:action --> github.com/yourusername/goTap.BenchmarkFiveParams.func1
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /user/:id/profile/:section/item/:item/action/:action --> github.com/yourusername/goTap.BenchmarkFiveParams.func1
+ 2987764	       416.2 ns/op	      29 B/op	       2 allocs/op
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func1
+[goTap-debug] GET    /about                    --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func2
+[goTap-debug] GET    /contact                  --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func3
+[goTap-debug] GET    /help                     --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func4
+[goTap-debug] GET    /api/v1/status            --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func5
+BenchmarkStaticRoutes-8         	[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func1
+[goTap-debug] GET    /about                    --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func2
+[goTap-debug] GET    /contact                  --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func3
+[goTap-debug] GET    /help                     --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func4
+[goTap-debug] GET    /api/v1/status            --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func5
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func1
+[goTap-debug] GET    /about                    --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func2
+[goTap-debug] GET    /contact                  --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func3
+[goTap-debug] GET    /help                     --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func4
+[goTap-debug] GET    /api/v1/status            --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func5
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func1
+[goTap-debug] GET    /about                    --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func2
+[goTap-debug] GET    /contact                  --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func3
+[goTap-debug] GET    /help                     --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func4
+[goTap-debug] GET    /api/v1/status            --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func5
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func1
+[goTap-debug] GET    /about                    --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func2
+[goTap-debug] GET    /contact                  --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func3
+[goTap-debug] GET    /help                     --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func4
+[goTap-debug] GET    /api/v1/status            --> github.com/yourusername/goTap.BenchmarkStaticRoutes.func5
+ 4214772	       246.8 ns/op	      31 B/op	       2 allocs/op
+[goTap-debug] goTap v0.1.0 - High-performance web framework
+[goTap-debug] GET    /                         --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func1
+[goTap-debug] GET    /authorizations           --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func2
+[goTap-debug] GET    /authorizations/:id       --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func3
+[goTap-debug] POST   /authorizations           --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func4
+[goTap-debug] DELETE /authorizations/:id       --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func5
+[goTap-debug] GET    /applications/:client_id/tokens/:access_token --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func6
+[goTap-debug] DELETE /applications/:client_id/grants/:grant_id --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func7
+[goTap-debug] GET    /events                   --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func8
+[goTap-debug] GET    /repos/:owner/:repo/events --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func9
+[goTap-debug] GET    /networks/:owner/:repo/events --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func10
+[goTap-debug] GET    /orgs/:org/events         --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func11
+[goTap-debug] GET    /users/:user/received/public --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func12
+[goTap-debug] GET    /users/:user/events       --> github.com/yourusername/goTap.BenchmarkGitHubAPI.func13
+panic: wildcard segment ':user' conflicts with existing children in path '/users/:user/events'
+
+goroutine 151 [running]:
+github.com/yourusername/goTap.(*node).insertChild(0xc0000ae0e0?, {0xc0002cc217?, 0xc000130248?}, {0xc0002cc210, 0x13}, {0xc00010e278, 0x1, 0x1})
+	C:/goTap/tree.go:177 +0x794
+github.com/yourusername/goTap.(*node).addRoute(0xe6bda6?, {0xc0002cc210, 0x13}, {0xc00010e278, 0x1, 0x1})
+	C:/goTap/tree.go:141 +0x7c5
+github.com/yourusername/goTap.(*Engine).addRoute(0xc000000000, {0xe6092d, 0x3}, {0xc0002cc210, 0x13}, {0xc00010e278, 0x1, 0x1})
+	C:/goTap/router.go:62 +0x35d
+github.com/yourusername/goTap.(*RouterGroup).handle(0xc000000000, {0xe6092d, 0x3}, {0xe6cc1b?, 0x0?}, {0xc00010e270, 0x1, 0x7fffabc43fb0?})
+	C:/goTap/routergroup.go:72 +0x145
+github.com/yourusername/goTap.(*RouterGroup).GET(...)
+	C:/goTap/routergroup.go:96
+github.com/yourusername/goTap.BenchmarkGitHubAPI(0xc00011ec88)
+	C:/goTap/benchmarks_test.go:100 +0x3a5
+testing.(*B).runN(0xc00011ec88, 0x1)
+	C:/Program Files/Go/src/testing/benchmark.go:193 +0xf0
+testing.(*B).run1.func1()
+	C:/Program Files/Go/src/testing/benchmark.go:215 +0x48
+created by testing.(*B).run1 in goroutine 1
+	C:/Program Files/Go/src/testing/benchmark.go:208 +0x90
+exit status 2
+FAIL	github.com/yourusername/goTap	7.903s
