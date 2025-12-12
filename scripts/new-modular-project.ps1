@@ -17,13 +17,19 @@
     The database driver to install: mysql, postgres, or sqlite (default: postgres).
 
 .PARAMETER GoTapPath
-    Path to local goTap framework (default: C:\goTap).
+    Path to local goTap framework (optional, for development).
+
+.PARAMETER UseLocal
+    Use local goTap instead of published module from GitHub.
 
 .EXAMPLE
     .\new-modular-project.ps1 -ProjectPath "C:\projects\vervepos" -ProjectName "vervepos"
 
 .EXAMPLE
     .\new-modular-project.ps1 -ProjectPath "C:\projects\myapp" -ProjectName "myapp" -Database mysql
+
+.EXAMPLE
+    .\new-modular-project.ps1 -ProjectPath "C:\projects\myapp" -UseLocal -GoTapPath "C:\goTap"
 
 #>
 
@@ -39,7 +45,10 @@ param(
     [string]$Database = "postgres",
     
     [Parameter(Mandatory=$false)]
-    [string]$GoTapPath = "C:\goTap"
+    [string]$GoTapPath = "",
+    
+    [Parameter(Mandatory=$false)]
+    [switch]$UseLocal = $false
 )
 
 # Colors
@@ -61,10 +70,19 @@ Write-Host @"
 
 "@ -ForegroundColor Magenta
 
-# Validate goTap path
-if (-not (Test-Path $GoTapPath)) {
-    Write-Error-Custom "goTap framework not found at: $GoTapPath"
-    exit 1
+# Check if using local goTap or published module
+if ($UseLocal) {
+    if ([string]::IsNullOrEmpty($GoTapPath)) {
+        $GoTapPath = "C:\goTap"
+    }
+    if (-not (Test-Path $GoTapPath)) {
+        Write-Error-Custom "Local goTap path not found: $GoTapPath"
+        Write-Info "Either fix the path or run without -UseLocal to use published module"
+        exit 1
+    }
+    Write-Info "Using local goTap from: $GoTapPath"
+} else {
+    Write-Info "Using published goTap module (github.com/jaswant99k/gotap@v0.1.0)"
 }
 
 # Extract project name if not provided
@@ -97,14 +115,20 @@ Write-Step "Initializing Go module..."
 go mod init $ProjectName
 Write-Success "Go module initialized"
 
-# Add goTap replace directive
-Write-Step "Linking local goTap framework..."
-Add-Content -Path "go.mod" -Value "`nreplace github.com/jaswant99k/gotap => $GoTapPath"
-Write-Success "Linked goTap from $GoTapPath"
+# Add goTap replace directive only if using local
+if ($UseLocal) {
+    Write-Step "Linking local goTap framework..."
+    Add-Content -Path "go.mod" -Value "`nreplace github.com/jaswant99k/gotap => $GoTapPath"
+    Write-Success "Linked goTap from $GoTapPath"
+}
 
 # Install dependencies
 Write-Step "Installing dependencies..."
-go get github.com/jaswant99k/gotap
+if ($UseLocal) {
+    go get github.com/jaswant99k/gotap
+} else {
+    go get github.com/jaswant99k/gotap@v0.1.0
+}
 go get gorm.io/gorm@v1.25.12
 go get golang.org/x/crypto/bcrypt
 go get github.com/swaggo/files

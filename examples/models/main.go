@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/jaswant99k/gotap"
+	goTap "github.com/jaswant99k/gotap"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/jaswant99k/gotap"
+	goTap "github.com/jaswant99k/gotap"
 	"github.com/jaswant99k/gotap/examples/swagger/docs"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
@@ -41,23 +41,27 @@ var (
 
 // User represents a user account
 type User struct {
-	gorm.Model
-	Username     string `gorm:"uniqueIndex;not null" json:"username" example:"john_doe"`
-	Email        string `gorm:"uniqueIndex;not null" json:"email" example:"john@example.com"`
-	PasswordHash string `gorm:"not null" json:"-"`
-	Role         string `gorm:"default:'user'" json:"role" example:"user" enums:"admin,user"`
-	IsActive     bool   `gorm:"default:true" json:"is_active" example:"true"`
+	ID           uint      `gorm:"primarykey" json:"id" example:"1"`
+	CreatedAt    time.Time `json:"created_at" example:"2024-01-01T00:00:00Z"`
+	UpdatedAt    time.Time `json:"updated_at" example:"2024-01-01T00:00:00Z"`
+	Username     string    `gorm:"uniqueIndex;not null" json:"username" example:"john_doe"`
+	Email        string    `gorm:"uniqueIndex;not null" json:"email" example:"john@example.com"`
+	PasswordHash string    `gorm:"not null" json:"-"`
+	Role         string    `gorm:"default:'user'" json:"role" example:"user" enums:"admin,user"`
+	IsActive     bool      `gorm:"default:true" json:"is_active" example:"true"`
 } // @name User
 
 // Product represents a product
 type Product struct {
-	gorm.Model
-	Name        string  `gorm:"not null" json:"name" example:"Laptop"`
-	SKU         string  `gorm:"uniqueIndex;not null" json:"sku" example:"LAP001"`
-	Description string  `json:"description" example:"High-performance laptop"`
-	Price       float64 `gorm:"not null" json:"price" example:"999.99"`
-	Stock       int     `gorm:"default:0" json:"stock" example:"10"`
-	Category    string  `json:"category" example:"Electronics"`
+	ID          uint      `gorm:"primarykey" json:"id" example:"1"`
+	CreatedAt   time.Time `json:"created_at" example:"2024-01-01T00:00:00Z"`
+	UpdatedAt   time.Time `json:"updated_at" example:"2024-01-01T00:00:00Z"`
+	Name        string    `gorm:"not null" json:"name" example:"Laptop"`
+	SKU         string    `gorm:"uniqueIndex;not null" json:"sku" example:"LAP001"`
+	Description string    `json:"description" example:"High-performance laptop"`
+	Price       float64   `gorm:"not null" json:"price" example:"999.99"`
+	Stock       int       `gorm:"default:0" json:"stock" example:"10"`
+	Category    string    `json:"category" example:"Electronics"`
 } // @name Product
 
 // RegisterRequest represents user registration data
