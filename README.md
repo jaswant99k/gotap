@@ -47,7 +47,7 @@ goTap is a high-performance HTTP web framework for Go, inspired by Gin. Designed
 ## 📦 Installation
 
 ```bash
-go get -u github.com/yourusername/goTap
+go get -u github.com/jaswant99k/gotap
 ```
 
 **Requirements:** Go 1.21+
@@ -57,7 +57,7 @@ go get -u github.com/yourusername/goTap
 ```go
 package main
 
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 func main() {
     // Create router with Logger and Recovery middleware
@@ -215,7 +215,7 @@ manage.Use(goTap.RequireAnyRole("admin", "manager"))
 
 ```go
 import (
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
 )
@@ -329,8 +329,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-- Project Link: [https://github.com/yourusername/goTap](https://github.com/yourusername/goTap)
-- Issues: [https://github.com/yourusername/goTap/issues](https://github.com/yourusername/goTap/issues)
+- Project Link: [https://github.com/jaswant99k/gotap](https://github.com/jaswant99k/gotap)
+- Issues: [https://github.com/jaswant99k/gotap/issues](https://github.com/jaswant99k/gotap/issues)
 
 ---
 

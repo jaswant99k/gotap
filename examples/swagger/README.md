@@ -34,7 +34,7 @@ go get -u github.com/swaggo/gin-swagger
 package main
 
 import (
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 	_ "yourproject/docs" // Import generated docs
 )
 
@@ -182,7 +182,7 @@ goTap.SetupSwaggerWithAuth(r, "/swagger",
 ### Custom Swagger Configuration
 
 ```go
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 swaggerConfig := &goTap.SwaggerConfig{
 	URL:                      "doc.json",

@@ -156,7 +156,7 @@ package auth
 import (
     "errors"
     "time"
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
     "golang.org/x/crypto/bcrypt"
 )
 
@@ -272,7 +272,7 @@ func (r *Repository) Update(user *User) error {
 package auth
 
 import (
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 type Handler struct {
@@ -354,7 +354,7 @@ func (h *Handler) GetProfile(c *goTap.Context) {
 package auth
 
 import (
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 // RegisterRoutes registers all auth module routes
@@ -519,7 +519,7 @@ package products
 
 import (
     "strconv"
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 type Handler struct {
@@ -581,7 +581,7 @@ func (h *Handler) GetProduct(c *goTap.Context) {
 ```go
 package products
 
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 func RegisterRoutes(r *goTap.Engine, handler *Handler, jwtSecret string) {
     api := r.Group("/api/products")
@@ -617,7 +617,7 @@ import (
     "yourapp/modules/orders"
     "yourapp/shared/database"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {

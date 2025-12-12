@@ -18,7 +18,7 @@ goTap provides built-in JWT and BasicAuth middleware for securing your APIs.
 ### Quick Start
 
 ```go
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 func main() {
     r := goTap.Default()
@@ -256,7 +256,7 @@ package handlers
 import (
     "time"
     "yourapp/models"
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 var jwtSecret = "your-secret-key-minimum-32-characters" // Use env variable!
@@ -477,7 +477,7 @@ import (
     "time"
     "yourapp/models"
     "yourapp/handlers"
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
     "gorm.io/gorm/logger"

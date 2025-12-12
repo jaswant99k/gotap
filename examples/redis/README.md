@@ -17,7 +17,7 @@ This example demonstrates how to use Redis caching and session management with g
 # Or use Docker: docker run -d -p 6379:6379 redis
 
 # Install dependencies
-go get github.com/yourusername/goTap
+go get github.com/jaswant99k/gotap
 go get github.com/redis/go-redis/v9
 ```
 
@@ -32,7 +32,7 @@ import (
     "log"
     "time"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {
@@ -77,7 +77,7 @@ import (
     "log"
     "time"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {
@@ -148,7 +148,7 @@ import (
     "log"
     "time"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {
@@ -227,7 +227,7 @@ package main
 import (
     "log"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {
@@ -299,7 +299,7 @@ import (
     "log"
     "time"
     
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
     _ "github.com/go-sql-driver/mysql"
 )
 

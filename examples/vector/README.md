@@ -19,7 +19,7 @@ Vector databases enable semantic search, product recommendations, and AI-powered
 package main
 
 import (
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {
@@ -612,7 +612,7 @@ Complete POS system with vector search:
 package main
 
 import (
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
 )
 
 func main() {

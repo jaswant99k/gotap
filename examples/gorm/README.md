@@ -54,7 +54,7 @@ package main
 
 import (
     "log"
-    "github.com/yourusername/goTap"
+    "github.com/jaswant99k/gotap"
     "gorm.io/gorm/logger"
 )
 
