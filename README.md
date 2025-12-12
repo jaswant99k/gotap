@@ -237,6 +237,50 @@ r.GET("/users/:id", func(c *goTap.Context) {
 
 **See full GORM guide:** [`examples/gorm/README.md`](examples/gorm/README.md)
 
+### Database Models with gotap.Model
+
+Use `gotap.Model` as a base for your GORM models:
+
+```go
+import "github.com/jaswant99k/gotap"
+
+// User model with gotap.Model base
+type User struct {
+    gotap.Model  // Includes ID, CreatedAt, UpdatedAt, DeletedAt
+    Username     string       `gorm:"uniqueIndex;not null" json:"username"`
+    Email        string       `gorm:"uniqueIndex;not null" json:"email"`
+    PasswordHash string       `gorm:"not null" json:"-"`
+    Role         string       `gorm:"default:'user'" json:"role"`
+    IsActive     bool         `gorm:"default:true" json:"is_active"`
+    Permissions  []Permission `gorm:"many2many:user_permissions;" json:"permissions,omitempty"`
+}
+
+// Permission model
+type Permission struct {
+    gotap.Model
+    Name        string `gorm:"uniqueIndex;not null" json:"name"`
+    Description string `json:"description"`
+}
+
+// Product model
+type Product struct {
+    gotap.Model
+    Name     string  `gorm:"not null" json:"name"`
+    SKU      string  `gorm:"uniqueIndex;not null" json:"sku"`
+    Price    float64 `gorm:"not null" json:"price"`
+    Stock    int     `gorm:"default:0" json:"stock"`
+    Category string  `gorm:"index" json:"category"`
+}
+```
+
+**Benefits of gotap.Model:**
+- Pre-configured with Swagger annotations and example values
+- Consistent framework namespace
+- Compatible with all GORM features (relationships, hooks, soft deletes)
+- Works identically to `gorm.Model` - use whichever you prefer
+
+**See complete models example:** [`examples/models/README.md`](examples/models/README.md)
+
 ## 🏗️ Project Structure
 
 ```
