@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3" // SQLite driver
-	"github.com/jaswant99k/gotap"
 	"github.com/jaswant99k/gotap/shadowdb"
+	_ "github.com/mattn/go-sqlite3" // SQLite driver
+	"github.com/yourusername/goTap"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 module github.com/jaswant99k/gotap
 
-go 1.23.4
+go 1.22.6
 
 require (
 	github.com/alicebob/miniredis/v2 v2.35.0
