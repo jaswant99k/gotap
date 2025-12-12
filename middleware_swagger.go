@@ -2,8 +2,11 @@ package goTap
 
 import (
 	"bufio"
+	"encoding/json"
+	"fmt"
 	"net"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -113,12 +116,21 @@ func SwaggerYAML(yamlData []byte) HandlerFunc {
 //	import _ "yourmodule/docs" // swagger docs
 //	goTap.SetupSwagger(r, "/swagger")
 func SetupSwagger(r *Engine, basePath string) {
+	SetupSwaggerWithConfig(r, basePath, nil)
+}
+
+// SetupSwaggerWithConfig registers Swagger UI routes with dynamic host configuration
+// Usage:
+//
+//	import _ "yourmodule/docs"
+//	goTap.SetupSwaggerWithConfig(r, "/swagger", &goTap.SwaggerConfig{URL: "doc.json"})
+func SetupSwaggerWithConfig(r *Engine, basePath string, config *SwaggerConfig) {
 	if basePath == "" {
 		basePath = "/swagger"
 	}
 
 	// Swagger UI
-	r.GET(basePath+"/*any", SwaggerHandler(nil))
+	r.GET(basePath+"/*any", SwaggerHandler(config))
 }
 
 // SetupSwaggerWithAuth registers Swagger UI routes with authentication
@@ -134,3 +146,60 @@ func SetupSwaggerWithAuth(r *Engine, basePath string, authMiddleware ...HandlerF
 	group.Use(authMiddleware...)
 	group.GET("/*any", SwaggerHandler(nil))
 }
+
+// UpdateSwaggerHost updates the Swagger spec host dynamically based on the server's running port
+// This should be called after swag init generates docs but before serving
+//
+// Usage:
+//
+//	import "yourmodule/docs"
+//	docs.SwaggerInfo.Host = goTap.UpdateSwaggerHost(":8080")  // Returns "localhost:8080"
+func UpdateSwaggerHost(addr string) string {
+	// Extract port from address
+	if addr == "" {
+		return "localhost:8080"
+	}
+
+	// Handle different address formats
+	if strings.HasPrefix(addr, ":") {
+		// ":8080" -> "localhost:8080"
+		return "localhost" + addr
+	}
+
+	// "0.0.0.0:8080" or "localhost:8080"
+	parts := strings.Split(addr, ":")
+	if len(parts) == 2 {
+		host := parts[0]
+		port := parts[1]
+		
+		// Replace 0.0.0.0 or empty with localhost
+		if host == "" || host == "0.0.0.0" {
+			host = "localhost"
+		}
+		
+		return fmt.Sprintf("%s:%s", host, port)
+	}
+
+	// Fallback
+	return "localhost:8080"
+}
+
+// GetSwaggerJSON returns a handler that serves swagger.json with dynamic host
+// This is useful when you need to override the host at runtime
+func GetSwaggerJSON(swaggerJSON []byte, host string) HandlerFunc {
+	return func(c *Context) {
+		var doc map[string]interface{}
+		if err := json.Unmarshal(swaggerJSON, &doc); err != nil {
+			c.JSON(500, H{"error": "Failed to parse swagger spec"})
+			return
+		}
+
+		// Update host dynamically
+		if host != "" {
+			doc["host"] = host
+		}
+
+		c.JSON(200, doc)
+	}
+}
+

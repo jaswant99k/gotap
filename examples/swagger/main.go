@@ -8,11 +8,10 @@ import (
 	"time"
 
 	"github.com/jaswant99k/gotap"
+	"github.com/jaswant99k/gotap/examples/swagger/docs"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-
-	_ "github.com/jaswant99k/gotap/examples/swagger/docs" // swagger docs
 )
 
 // @title           goTap Swagger Example API
@@ -112,6 +111,16 @@ func main() {
 	// Initialize goTap
 	r := goTap.Default()
 
+	// Determine port
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	addr := ":" + port
+
+	// Update Swagger host dynamically to match the running port
+	docs.SwaggerInfo.Host = goTap.UpdateSwaggerHost(addr)
+
 	// Setup Swagger UI (public access)
 	goTap.SetupSwagger(r, "/swagger")
 
@@ -146,17 +155,12 @@ func main() {
 		}
 	}
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
 	fmt.Println("🚀 Server starting on http://localhost:" + port)
 	fmt.Println("📚 Swagger UI: http://localhost:" + port + "/swagger/index.html")
 	fmt.Println("🔑 Default admin: admin@example.com / admin123")
 	fmt.Println()
 
-	if err := r.Run(":" + port); err != nil {
+	if err := r.Run(addr); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
 }
