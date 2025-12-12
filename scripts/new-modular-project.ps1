@@ -954,11 +954,10 @@ import (
 	"$ProjectName/modules/auth"
 	"$ProjectName/modules/products"
 	"$ProjectName/shared/database"
+	"$ProjectName/docs"
 
 	"github.com/jaswant99k/gotap"
 	"gorm.io/gorm"
-	
-	_ "$ProjectName/docs" // swagger docs (run 'swag init' to generate)
 )
 
 // @title           $ProjectName API
@@ -1009,6 +1008,16 @@ func main() {
 	r := goTap.Default()
 	r.Use(goTap.GormInject(db))
 
+	// Determine port
+	port := os.Getenv("SERVER_PORT")
+	if port == "" {
+		port = "8080"
+	}
+	addr := ":" + port
+
+	// Update Swagger host dynamically to match the running port
+	docs.SwaggerInfo.Host = goTap.UpdateSwaggerHost(addr)
+
 	// Setup Swagger UI
 	goTap.SetupSwagger(r, "/swagger")
 
@@ -1024,12 +1033,6 @@ func main() {
 	initAuthModule(r, db, jwtSecret)
 	initProductsModule(r, db, jwtSecret)
 
-	// Start server
-	port := os.Getenv("SERVER_PORT")
-	if port == "" {
-		port = "8080"
-	}
-
 	log.Println(" Server starting on http://localhost:" + port)
 	log.Println(" Swagger UI: http://localhost:" + port + "/swagger/index.html")
 	log.Println(" Default admin: admin@example.com / admin123")
@@ -1044,11 +1047,11 @@ func main() {
 	if err := r.Run(":" + port); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
-}
+	log.Println("  POST /api/products - Create product (admin only)")
+	log.Println()
 
-func initAuthModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
-	repo := auth.NewRepository(db)
-	service := auth.NewService(repo, jwtSecret)
+	if err := r.Run(addr); err != nil {
+		log.Fatal("Failed to start server:", err))
 	handler := auth.NewHandler(service)
 	auth.RegisterRoutes(r, handler, jwtSecret)
 	log.Println(" Auth module initialized")
@@ -1210,12 +1213,24 @@ $ProjectName/
    go mod download
    \`\`\`
 
-3. **Run Application**
+3. **Generate Swagger Documentation**
+   \`\`\`bash
+   # Install swag CLI (if not already installed)
+   go install github.com/swaggo/swag/cmd/swag@latest
+   
+   # Generate Swagger docs
+   swag init -g cmd/server/main.go --output docs
+   \`\`\`
+
+4. **Run Application**
    \`\`\`bash
    go run cmd/server/main.go
    \`\`\`
 
-4. **Test API**
+5. **Access Swagger UI**
+   Open http://localhost:8080/swagger/index.html
+
+6. **Test API**
    \`\`\`powershell
    # Login
    `$response = Invoke-RestMethod -Uri "http://localhost:8080/api/auth/login" \`

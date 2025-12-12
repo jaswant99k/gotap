@@ -1,4 +1,4 @@
-package gotap
+package goTap
 
 import (
 	"time"

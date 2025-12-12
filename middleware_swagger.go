@@ -171,12 +171,12 @@ func UpdateSwaggerHost(addr string) string {
 	if len(parts) == 2 {
 		host := parts[0]
 		port := parts[1]
-		
+
 		// Replace 0.0.0.0 or empty with localhost
 		if host == "" || host == "0.0.0.0" {
 			host = "localhost"
 		}
-		
+
 		return fmt.Sprintf("%s:%s", host, port)
 	}
 
@@ -202,4 +202,3 @@ func GetSwaggerJSON(swaggerJSON []byte, host string) HandlerFunc {
 		c.JSON(200, doc)
 	}
 }
-

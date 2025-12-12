@@ -240,10 +240,10 @@ func createOrder(c *gotap.Context) {
 	}
 
 	db := gotap.GetDB()
-	
+
 	// Start transaction
 	tx := db.Begin()
-	
+
 	// Create order
 	if err := tx.Create(&order).Error; err != nil {
 		tx.Rollback()
