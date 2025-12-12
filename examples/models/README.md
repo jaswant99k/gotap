@@ -1,10 +1,28 @@
 # goTap Models Example
 
-This example demonstrates how to use `gotap.Model` as a base for your database models.
+This example demonstrates how to use `goTap.Model` as a base for your database models.
+
+## ⚠️ Important Note
+
+This example uses SQLite which requires CGO. If you get a CGO error:
+
+**Option 1: Enable CGO (Windows)**
+```bash
+$env:CGO_ENABLED=1
+go build
+```
+
+**Option 2: Use PostgreSQL/MySQL instead**
+Change the database driver in `main.go`:
+```go
+import "gorm.io/driver/postgres"  // or mysql
+
+db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+```
 
 ## Features
 
-- **gotap.Model**: Base model with ID, CreatedAt, UpdatedAt, DeletedAt (soft delete support)
+- **goTap.Model**: Base model with ID, CreatedAt, UpdatedAt, DeletedAt (soft delete support)
 - **Relationships**: One-to-Many, Many-to-Many with junction tables
 - **CRUD Operations**: Complete Create, Read, Update, Delete examples
 - **Transactions**: Safe multi-table operations
@@ -16,7 +34,7 @@ This example demonstrates how to use `gotap.Model` as a base for your database m
 ### User Model
 ```go
 type User struct {
-    gotap.Model
+    goTap.Model
     Username     string       `gorm:"uniqueIndex;not null" json:"username"`
     Email        string       `gorm:"uniqueIndex;not null" json:"email"`
     PasswordHash string       `gorm:"not null" json:"-"`
@@ -29,7 +47,7 @@ type User struct {
 ### Product Model
 ```go
 type Product struct {
-    gotap.Model
+    goTap.Model
     Name        string  `gorm:"not null" json:"name"`
     SKU         string  `gorm:"uniqueIndex;not null" json:"sku"`
     Description string  `json:"description"`
@@ -43,7 +61,7 @@ type Product struct {
 ### Order Model (with relationships)
 ```go
 type Order struct {
-    gotap.Model
+    goTap.Model
     UserID      uint        `gorm:"not null;index" json:"user_id"`
     User        User        `gorm:"foreignKey:UserID" json:"user"`
     OrderItems  []OrderItem `gorm:"foreignKey:OrderID" json:"order_items"`
@@ -52,7 +70,7 @@ type Order struct {
 }
 ```
 
-## gotap.Model vs gorm.Model
+## goTap.Model vs gorm.Model
 
 ### Using gorm.Model (standard)
 ```go
@@ -64,21 +82,21 @@ type User struct {
 }
 ```
 
-### Using gotap.Model (goTap-specific)
+### Using goTap.Model (goTap-specific)
 ```go
 import "github.com/jaswant99k/gotap"
 
 type User struct {
-    gotap.Model  // Same fields, goTap namespace
+    goTap.Model  // Same fields, goTap namespace
     Username string
 }
 ```
 
-## Benefits of gotap.Model
+## Benefits of goTap.Model
 
 1. **Framework Integration**: Future goTap features can extend the model
 2. **Swagger Support**: Pre-configured with Swagger annotations
-3. **Consistent Namespace**: All framework types under `gotap.*`
+3. **Consistent Namespace**: All framework types under `goTap.*`
 4. **Example Tags**: Includes example values for API documentation
 5. **Flexibility**: Works with all GORM features and relationships
 
@@ -202,7 +220,7 @@ tx.Commit()
 Automatically manages junction tables:
 ```go
 type User struct {
-    gotap.Model
+    goTap.Model
     Permissions []Permission `gorm:"many2many:user_permissions;"`
 }
 ```
@@ -234,8 +252,9 @@ db.AutoMigrate(&User{}, &Permission{}, &Product{}, &Order{}, &OrderItem{})
 
 ## Notes
 
-- Both `gotap.Model` and `gorm.Model` work identically
-- Use `gotap.Model` for consistency with the framework
+- Both `goTap.Model` and `gorm.Model` work identically
+- Use `goTap.Model` for consistency with the framework
 - Use `gorm.Model` if you prefer standard GORM conventions
 - All GORM features (hooks, callbacks, scopes) work with both
-- `gotap.BaseModel` is an alias for backward compatibility
+- `goTap.BaseModel` is an alias for backward compatibility
+

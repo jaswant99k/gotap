@@ -8,9 +8,9 @@ import (
 	"gorm.io/gorm"
 )
 
-// User model using gotap.Model
+// User model using goTap.Model
 type User struct {
-	gotap.Model
+	goTap.Model
 	Username     string       `gorm:"uniqueIndex;not null" json:"username" example:"john_doe"`
 	Email        string       `gorm:"uniqueIndex;not null" json:"email" example:"john@example.com"`
 	PasswordHash string       `gorm:"not null" json:"-"`
@@ -19,16 +19,16 @@ type User struct {
 	Permissions  []Permission `gorm:"many2many:user_permissions;" json:"permissions,omitempty"`
 }
 
-// Permission model using gotap.Model
+// Permission model using goTap.Model
 type Permission struct {
-	gotap.Model
+	goTap.Model
 	Name        string `gorm:"uniqueIndex;not null" json:"name" example:"read:users"`
 	Description string `json:"description" example:"Can read user data"`
 }
 
-// Product model using gotap.Model
+// Product model using goTap.Model
 type Product struct {
-	gotap.Model
+	goTap.Model
 	Name        string  `gorm:"not null" json:"name" example:"Laptop"`
 	SKU         string  `gorm:"uniqueIndex;not null" json:"sku" example:"LAP-001"`
 	Description string  `json:"description" example:"High-performance laptop"`
@@ -40,7 +40,7 @@ type Product struct {
 
 // Order model demonstrating relationships
 type Order struct {
-	gotap.Model
+	goTap.Model
 	UserID      uint        `gorm:"not null;index" json:"user_id" example:"1"`
 	User        User        `gorm:"foreignKey:UserID" json:"user"`
 	OrderItems  []OrderItem `gorm:"foreignKey:OrderID" json:"order_items"`
@@ -50,7 +50,7 @@ type Order struct {
 
 // OrderItem model for many-to-many with additional fields
 type OrderItem struct {
-	gotap.Model
+	goTap.Model
 	OrderID   uint    `gorm:"not null;index" json:"order_id" example:"1"`
 	ProductID uint    `gorm:"not null;index" json:"product_id" example:"1"`
 	Product   Product `gorm:"foreignKey:ProductID" json:"product"`
@@ -60,7 +60,7 @@ type OrderItem struct {
 
 func main() {
 	// Initialize goTap
-	r := gotap.Default()
+	r := goTap.Default()
 
 	// Setup database
 	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
@@ -74,12 +74,12 @@ func main() {
 		log.Fatal("Failed to migrate database:", err)
 	}
 
-	// Inject GORM instance
-	gotap.GormInject(db)
+	// Inject GORM instance as middleware
+	r.Use(goTap.GormInject(db))
 
 	// Routes
-	r.GET("/health", func(c *gotap.Context) {
-		c.JSON(200, gotap.H{"status": "ok"})
+	r.GET("/health", func(c *goTap.Context) {
+		c.JSON(200, goTap.H{"status": "ok"})
 	})
 
 	// User routes
@@ -104,119 +104,119 @@ func main() {
 }
 
 // User handlers
-func createUser(c *gotap.Context) {
+func createUser(c *goTap.Context) {
 	var user User
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(400, gotap.H{"error": err.Error()})
+		c.JSON(400, goTap.H{"error": err.Error()})
 		return
 	}
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	if err := db.Create(&user).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(201, user)
 }
 
-func getUser(c *gotap.Context) {
+func getUser(c *goTap.Context) {
 	id := c.Param("id")
 	var user User
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	// Preload permissions relationship
 	if err := db.Preload("Permissions").First(&user, id).Error; err != nil {
-		c.JSON(404, gotap.H{"error": "User not found"})
+		c.JSON(404, goTap.H{"error": "User not found"})
 		return
 	}
 
 	c.JSON(200, user)
 }
 
-func listUsers(c *gotap.Context) {
+func listUsers(c *goTap.Context) {
 	var users []User
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	if err := db.Preload("Permissions").Find(&users).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(200, users)
 }
 
-func updateUser(c *gotap.Context) {
+func updateUser(c *goTap.Context) {
 	id := c.Param("id")
 	var user User
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	if err := db.First(&user, id).Error; err != nil {
-		c.JSON(404, gotap.H{"error": "User not found"})
+		c.JSON(404, goTap.H{"error": "User not found"})
 		return
 	}
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(400, gotap.H{"error": err.Error()})
+		c.JSON(400, goTap.H{"error": err.Error()})
 		return
 	}
 
 	if err := db.Save(&user).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(200, user)
 }
 
-func deleteUser(c *gotap.Context) {
+func deleteUser(c *goTap.Context) {
 	id := c.Param("id")
 	var user User
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	// Soft delete (sets DeletedAt timestamp)
 	if err := db.Delete(&user, id).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(200, gotap.H{"message": "User deleted successfully"})
+	c.JSON(200, goTap.H{"message": "User deleted successfully"})
 }
 
 // Product handlers
-func createProduct(c *gotap.Context) {
+func createProduct(c *goTap.Context) {
 	var product Product
 	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(400, gotap.H{"error": err.Error()})
+		c.JSON(400, goTap.H{"error": err.Error()})
 		return
 	}
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	if err := db.Create(&product).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(201, product)
 }
 
-func getProduct(c *gotap.Context) {
+func getProduct(c *goTap.Context) {
 	id := c.Param("id")
 	var product Product
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	if err := db.First(&product, id).Error; err != nil {
-		c.JSON(404, gotap.H{"error": "Product not found"})
+		c.JSON(404, goTap.H{"error": "Product not found"})
 		return
 	}
 
 	c.JSON(200, product)
 }
 
-func listProducts(c *gotap.Context) {
+func listProducts(c *goTap.Context) {
 	var products []Product
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	// Support filtering by category
 	query := db
 	if category := c.Query("category"); category != "" {
@@ -224,7 +224,7 @@ func listProducts(c *gotap.Context) {
 	}
 
 	if err := query.Find(&products).Error; err != nil {
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
@@ -232,14 +232,14 @@ func listProducts(c *gotap.Context) {
 }
 
 // Order handlers
-func createOrder(c *gotap.Context) {
+func createOrder(c *goTap.Context) {
 	var order Order
 	if err := c.ShouldBindJSON(&order); err != nil {
-		c.JSON(400, gotap.H{"error": err.Error()})
+		c.JSON(400, goTap.H{"error": err.Error()})
 		return
 	}
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 
 	// Start transaction
 	tx := db.Begin()
@@ -247,7 +247,7 @@ func createOrder(c *gotap.Context) {
 	// Create order
 	if err := tx.Create(&order).Error; err != nil {
 		tx.Rollback()
-		c.JSON(500, gotap.H{"error": err.Error()})
+		c.JSON(500, goTap.H{"error": err.Error()})
 		return
 	}
 
@@ -256,7 +256,7 @@ func createOrder(c *gotap.Context) {
 		if err := tx.Model(&Product{}).Where("id = ?", item.ProductID).
 			Update("stock", gorm.Expr("stock - ?", item.Quantity)).Error; err != nil {
 			tx.Rollback()
-			c.JSON(500, gotap.H{"error": "Failed to update stock"})
+			c.JSON(500, goTap.H{"error": "Failed to update stock"})
 			return
 		}
 	}
@@ -265,14 +265,14 @@ func createOrder(c *gotap.Context) {
 	c.JSON(201, order)
 }
 
-func getOrder(c *gotap.Context) {
+func getOrder(c *goTap.Context) {
 	id := c.Param("id")
 	var order Order
 
-	db := gotap.GetDB()
+	db := goTap.MustGetGorm(c)
 	// Preload all relationships
 	if err := db.Preload("User").Preload("OrderItems.Product").First(&order, id).Error; err != nil {
-		c.JSON(404, gotap.H{"error": "Order not found"})
+		c.JSON(404, goTap.H{"error": "Order not found"})
 		return
 	}
 
