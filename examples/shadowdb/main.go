@@ -6,8 +6,8 @@ import (
 	"time"
 
 	_ "github.com/mattn/go-sqlite3" // SQLite driver
-	"github.com/yourusername/goTap"
-	"github.com/yourusername/goTap/shadowdb"
+	"github.com/jaswant99k/gotap"
+	"github.com/jaswant99k/gotap/shadowdb"
 )
 
 func main() {

@@ -7,7 +7,7 @@ package goTap
 import (
 	"database/sql"
 
-	"github.com/yourusername/goTap/shadowdb"
+	"github.com/jaswant99k/gotap/shadowdb"
 )
 
 // ShadowDBMiddleware returns a middleware that injects Shadow DB into context

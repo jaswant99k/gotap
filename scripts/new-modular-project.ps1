@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env pwsh
+#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
     Creates a new goTap project with modular (feature-based) structure.
@@ -99,12 +99,12 @@ Write-Success "Go module initialized"
 
 # Add goTap replace directive
 Write-Step "Linking local goTap framework..."
-Add-Content -Path "go.mod" -Value "`nreplace github.com/yourusername/goTap => $GoTapPath"
+Add-Content -Path "go.mod" -Value "`nreplace github.com/jaswant99k/gotap => $GoTapPath"
 Write-Success "Linked goTap from $GoTapPath"
 
 # Install dependencies
 Write-Step "Installing dependencies..."
-go get github.com/yourusername/goTap
+go get github.com/jaswant99k/gotap
 go get gorm.io/gorm@v1.25.12
 go get golang.org/x/crypto/bcrypt
 go get github.com/swaggo/files
@@ -334,7 +334,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 type Service struct {
@@ -412,7 +412,7 @@ package auth
 import (
 	"strconv"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 type Handler struct {
@@ -558,7 +558,7 @@ Write-Success "Created modules/auth/handlers.go"
 $authRoutesContent = @"
 package auth
 
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 func RegisterRoutes(r *goTap.Engine, handler *Handler, jwtSecret string) {
 	// Public routes
@@ -759,7 +759,7 @@ package products
 import (
 	"strconv"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 type Handler struct {
@@ -918,7 +918,7 @@ Write-Success "Created modules/products/handlers.go"
 $productsRoutesContent = @"
 package products
 
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 func RegisterRoutes(r *goTap.Engine, handler *Handler, jwtSecret string) {
 	api := r.Group("/api/products")
@@ -955,7 +955,7 @@ import (
 	"$ProjectName/modules/products"
 	"$ProjectName/shared/database"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 	"gorm.io/gorm"
 	
 	_ "$ProjectName/docs" // swagger docs (run 'swag init' to generate)
