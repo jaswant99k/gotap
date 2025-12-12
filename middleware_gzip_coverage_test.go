@@ -10,7 +10,7 @@ import (
 func TestGzipResponseWriterStatus(t *testing.T) {
 	engine := New()
 	engine.Use(Gzip())
-	
+
 	var recordedStatus int
 	engine.GET("/test", func(c *Context) {
 		c.Writer.WriteHeader(201)
@@ -33,9 +33,9 @@ func TestGzipResponseWriterStatus(t *testing.T) {
 func TestGzipResponseWriterSize(t *testing.T) {
 	engine := New()
 	engine.Use(Gzip())
-	
+
 	testData := "Hello, World!"
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.Writer.Write([]byte(testData))
 		size := c.Writer.Size()
@@ -54,7 +54,7 @@ func TestGzipResponseWriterSize(t *testing.T) {
 func TestGzipResponseWriterWritten(t *testing.T) {
 	engine := New()
 	engine.Use(Gzip())
-	
+
 	engine.GET("/test", func(c *Context) {
 		if c.Writer.Written() {
 			t.Error("Should not be written before first write")
@@ -75,7 +75,7 @@ func TestGzipResponseWriterWritten(t *testing.T) {
 func TestGzipResponseWriterWriteHeaderNow(t *testing.T) {
 	engine := New()
 	engine.Use(Gzip())
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.Writer.WriteHeader(202)
 		c.Writer.WriteHeaderNow()
@@ -104,13 +104,13 @@ func TestGzipWithDifferentLevels(t *testing.T) {
 		engine.Use(GzipWithConfig(GzipConfig{
 			Level: level,
 		}))
-		
+
 		// Need large enough data to trigger compression (>= MinLength default 1024)
 		largeData := make([]byte, 2048)
 		for i := range largeData {
 			largeData[i] = byte('a' + (i % 26))
 		}
-		
+
 		engine.GET("/test", func(c *Context) {
 			c.String(200, string(largeData))
 		})

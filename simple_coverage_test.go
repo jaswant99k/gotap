@@ -17,12 +17,12 @@ func TestWebSocketHubClientsMethod(t *testing.T) {
 	defer hub.Close()
 
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			hub.Register(ws)
 			defer hub.Unregister(ws)
-			
+
 			// Keep connection alive
 			for {
 				_, _, err := ws.Conn.ReadMessage()
@@ -80,9 +80,9 @@ func TestXMLBindBody(t *testing.T) {
 // Test RateLimiter Reset method
 func TestRateLimiterResetMethod(t *testing.T) {
 	engine := New()
-	
+
 	limiter := RateLimiter(5, 10)
-	
+
 	engine.Use(limiter)
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
@@ -120,10 +120,10 @@ func TestValidationEngineAccessor(t *testing.T) {
 // Test CombinedIPFilter middleware
 func TestCombinedIPFilterMiddleware(t *testing.T) {
 	engine := New()
-	
+
 	whitelist := []string{"192.168.1.1", "10.0.0.1"}
 	blacklist := []string{"192.168.1.100", "10.0.0.100"}
-	
+
 	engine.Use(CombinedIPFilter(whitelist, blacklist))
 
 	engine.GET("/test", func(c *Context) {
@@ -155,11 +155,11 @@ func TestCombinedIPFilterMiddleware(t *testing.T) {
 // Test RefreshToken function
 func TestRefreshTokenFunction(t *testing.T) {
 	secret := "test_secret_key_for_jwt_minimum_32_chars"
-	
+
 	// Create a test token first
 	engine := New()
 	engine.Use(JWTAuth(secret))
-	
+
 	engine.GET("/protected", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -167,7 +167,7 @@ func TestRefreshTokenFunction(t *testing.T) {
 	// Make a request to get a token (we'll need to generate one manually for testing)
 	// For now, just test that the RefreshToken function exists and can be called
 	// Note: RefreshToken requires a valid JWT, which is complex to set up in a unit test
-	
+
 	// Test with an invalid token to ensure function executes
 	newToken, err := RefreshToken("invalid.token.here", secret, 3600*time.Second)
 	if err == nil {
@@ -176,33 +176,33 @@ func TestRefreshTokenFunction(t *testing.T) {
 	if newToken != "" {
 		t.Error("Expected empty token on error")
 	}
-	
+
 	t.Log("RefreshToken function executed")
 }
 
 // Test LoadHTMLFiles function
 func TestLoadHTMLFilesFunction(t *testing.T) {
 	engine := New()
-	
+
 	// Create temporary HTML files
 	tmpDir := t.TempDir()
 	file1 := tmpDir + "/template1.html"
 	file2 := tmpDir + "/template2.html"
-	
+
 	// Use os package to write files
 	data1 := []byte("<html><body>{{.Title}}</body></html>")
 	data2 := []byte("<html><body>{{.Content}}</body></html>")
-	
+
 	if err := writeFile(file1, data1); err != nil {
 		t.Fatalf("Failed to create template1: %v", err)
 	}
 	if err := writeFile(file2, data2); err != nil {
 		t.Fatalf("Failed to create template2: %v", err)
 	}
-	
+
 	// Load the templates
 	engine.LoadHTMLFiles(file1, file2)
-	
+
 	// Test rendering
 	engine.GET("/test", func(c *Context) {
 		c.HTML(200, "template1.html", H{"Title": "Test"})
@@ -215,7 +215,7 @@ func TestLoadHTMLFilesFunction(t *testing.T) {
 	if w.Code != 200 {
 		t.Errorf("Expected 200, got %d", w.Code)
 	}
-	
+
 	if !strings.Contains(w.Body.String(), "Test") {
 		t.Errorf("Expected rendered HTML to contain 'Test'")
 	}
@@ -226,4 +226,3 @@ func writeFile(filename string, data []byte) error {
 	// This will use os.WriteFile under the hood
 	return os.WriteFile(filename, data, 0644)
 }
-

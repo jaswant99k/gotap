@@ -30,8 +30,16 @@ goTap is a high-performance HTTP web framework for Go, inspired by Gin. Designed
 - **Gzip Compression** - Automatic response compression with smart thresholds
 - **Server-Sent Events** - Streaming real-time updates
 
+### API Documentation
+- **Swagger/OpenAPI** - Interactive API documentation with Swagger UI
+- **Auto-Generation** - Generate docs from code annotations
+- **Interactive Testing** - Test APIs directly in browser
+- **Authentication Support** - JWT, BasicAuth in Swagger UI
+- **OpenAPI 3.0** - Industry-standard API specification
+
 ### POS-Optimized Features
 - **Shadow Database** - Dual-DB with automatic failover and health monitoring
+- **GORM Integration** - Type-safe ORM with MySQL, PostgreSQL, SQLite support
 - **WebSocket Support** - Real-time bidirectional communication
 - **Transaction Tracking** - Audit trail with UUID/POS ID generation
 - **High Availability** - Built for 99.9%+ uptime retail systems
@@ -165,6 +173,69 @@ r.Use(goTap.GzipWithConfig(goTap.GzipConfig{
     ExcludedExtensions: []string{".jpg", ".png", ".pdf"},
 }))
 ```
+
+### JWT Authentication
+
+```go
+secret := "your-secret-key-minimum-32-characters"
+
+// Public routes
+r.POST("/login", loginHandler)
+r.POST("/register", registerHandler)
+
+// Protected routes (require authentication)
+auth := r.Group("/api")
+auth.Use(goTap.JWTAuth(secret))
+{
+    auth.GET("/profile", getProfile)
+    auth.PUT("/profile", updateProfile)
+}
+
+// Admin-only routes
+admin := r.Group("/admin")
+admin.Use(goTap.JWTAuth(secret))
+admin.Use(goTap.RequireRole("admin"))
+{
+    admin.GET("/users", listUsers)
+    admin.DELETE("/users/:id", deleteUser)
+}
+
+// Multiple roles allowed
+manage := r.Group("/manage")
+manage.Use(goTap.JWTAuth(secret))
+manage.Use(goTap.RequireAnyRole("admin", "manager"))
+{
+    manage.GET("/orders", listOrders)
+}
+```
+
+**See full authentication guide:** [`examples/auth/README.md`](examples/auth/README.md)
+
+### GORM Database Integration
+
+```go
+import (
+    "github.com/yourusername/goTap"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+)
+
+// Connect to database
+db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+// Inject GORM into context
+r.Use(goTap.GormInject(db))
+
+// Use in handlers
+r.GET("/users/:id", func(c *goTap.Context) {
+    db := goTap.MustGetGorm(c)
+    var user User
+    db.First(&user, c.Param("id"))
+    c.JSON(200, user)
+})
+```
+
+**See full GORM guide:** [`examples/gorm/README.md`](examples/gorm/README.md)
 
 ## 🏗️ Project Structure
 

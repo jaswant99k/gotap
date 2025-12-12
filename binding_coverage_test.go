@@ -29,7 +29,7 @@ func TestBindingNames(t *testing.T) {
 			t.Errorf("Expected binding name '%s', got '%s'", tt.expected, name)
 		}
 	}
-	
+
 	// Test URI binding separately
 	if name := Uri.Name(); name != "uri" {
 		t.Errorf("Expected URI binding name 'uri', got '%s'", name)
@@ -44,29 +44,29 @@ func TestSetSliceField(t *testing.T) {
 			Tags []string `form:"tags"`
 			IDs  []int    `form:"ids"`
 		}
-		
+
 		c.Request.URL.RawQuery = "tags=go&tags=web&tags=framework&ids=1&ids=2&ids=3"
-		
+
 		if err := c.ShouldBindQuery(&data); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if len(data.Tags) != 3 {
 			t.Errorf("Expected 3 tags, got %d", len(data.Tags))
 		}
 		if data.Tags[0] != "go" || data.Tags[1] != "web" || data.Tags[2] != "framework" {
 			t.Errorf("Tags mismatch: %v", data.Tags)
 		}
-		
+
 		if len(data.IDs) != 3 {
 			t.Errorf("Expected 3 IDs, got %d", len(data.IDs))
 		}
 		if data.IDs[0] != 1 || data.IDs[1] != 2 || data.IDs[2] != 3 {
 			t.Errorf("IDs mismatch: %v", data.IDs)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -92,14 +92,14 @@ func TestBindingNestedStructs(t *testing.T) {
 			Age     int     `json:"age"`
 			Address Address `json:"address"`
 		}
-		
+
 		var user User
 		if err := c.ShouldBindJSON(&user); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if user.Name != "John" {
 			t.Errorf("Expected 'John', got '%s'", user.Name)
 		}
@@ -112,7 +112,7 @@ func TestBindingNestedStructs(t *testing.T) {
 		if user.Address.Country != "USA" {
 			t.Errorf("Expected 'USA', got '%s'", user.Address.Country)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -135,20 +135,20 @@ func TestFormBindingMultipleValues(t *testing.T) {
 			Colors []string `form:"color"`
 			Count  int      `form:"count"`
 		}
-		
+
 		if err := c.ShouldBind(&data); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if len(data.Colors) != 3 {
 			t.Errorf("Expected 3 colors, got %d", len(data.Colors))
 		}
 		if data.Count != 5 {
 			t.Errorf("Expected count 5, got %d", data.Count)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -157,7 +157,7 @@ func TestFormBindingMultipleValues(t *testing.T) {
 	form.Add("color", "green")
 	form.Add("color", "blue")
 	form.Add("count", "5")
-	
+
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("POST", "/test", strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -176,13 +176,13 @@ func TestMultipartFormBinding(t *testing.T) {
 			Title       string `form:"title"`
 			Description string `form:"description"`
 		}
-		
+
 		if err := c.ShouldBind(&data); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		// Also test file retrieval
 		file, err := c.FormFile("document")
 		if err != nil {
@@ -190,11 +190,11 @@ func TestMultipartFormBinding(t *testing.T) {
 		} else if file.Filename != "test.txt" {
 			t.Errorf("Expected filename 'test.txt', got '%s'", file.Filename)
 		}
-		
+
 		if data.Title != "Test Document" {
 			t.Errorf("Expected 'Test Document', got '%s'", data.Title)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -202,7 +202,7 @@ func TestMultipartFormBinding(t *testing.T) {
 	writer := multipart.NewWriter(body)
 	writer.WriteField("title", "Test Document")
 	writer.WriteField("description", "A test file")
-	
+
 	part, _ := writer.CreateFormFile("document", "test.txt")
 	part.Write([]byte("test content"))
 	writer.Close()
@@ -222,17 +222,17 @@ func TestBindingPointerFields(t *testing.T) {
 	engine := New()
 	engine.GET("/test", func(c *Context) {
 		var data struct {
-			Name  *string `form:"name"`
-			Age   *int    `form:"age"`
-			Active *bool  `form:"active"`
+			Name   *string `form:"name"`
+			Age    *int    `form:"age"`
+			Active *bool   `form:"active"`
 		}
-		
+
 		if err := c.ShouldBindQuery(&data); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if data.Name == nil || *data.Name != "Alice" {
 			t.Error("Name pointer binding failed")
 		}
@@ -242,7 +242,7 @@ func TestBindingPointerFields(t *testing.T) {
 		if data.Active == nil || *data.Active != true {
 			t.Error("Active pointer binding failed")
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -264,13 +264,13 @@ func TestHeaderBindingCustomNames(t *testing.T) {
 			UserAgent string `header:"User-Agent"`
 			Accept    string `header:"Accept"`
 		}
-		
+
 		if err := c.ShouldBindHeader(&headers); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if headers.Token != "secret123" {
 			t.Errorf("Expected 'secret123', got '%s'", headers.Token)
 		}
@@ -280,7 +280,7 @@ func TestHeaderBindingCustomNames(t *testing.T) {
 		if headers.Accept != "application/json" {
 			t.Errorf("Expected 'application/json', got '%s'", headers.Accept)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -304,20 +304,20 @@ func TestURIBindingMultipleParams(t *testing.T) {
 			UserID string `uri:"userId"`
 			PostID string `uri:"postId"`
 		}
-		
+
 		if err := c.ShouldBindUri(&params); err != nil {
 			t.Errorf("Bind failed: %v", err)
 			c.String(500, "error")
 			return
 		}
-		
+
 		if params.UserID != "123" {
 			t.Errorf("Expected '123', got '%s'", params.UserID)
 		}
 		if params.PostID != "456" {
 			t.Errorf("Expected '456', got '%s'", params.PostID)
 		}
-		
+
 		c.String(200, "ok")
 	})
 
@@ -338,7 +338,7 @@ func TestBindingInvalidData(t *testing.T) {
 			Name string `json:"name" binding:"required"`
 			Age  int    `json:"age" binding:"required,min=1"`
 		}
-		
+
 		err := c.ShouldBindJSON(&data)
 		if err == nil {
 			t.Error("Expected binding error for invalid JSON")

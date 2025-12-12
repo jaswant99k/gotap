@@ -9,11 +9,11 @@ import (
 // Test validation Engine method
 func TestValidationEngine(t *testing.T) {
 	engine := New()
-	
+
 	type ValidatedStruct struct {
 		Name string `validate:"required"`
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data ValidatedStruct
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -37,14 +37,14 @@ func TestValidationEngine(t *testing.T) {
 // Test validateMax with various types
 func TestValidateMaxEdgeCases(t *testing.T) {
 	engine := New()
-	
+
 	type MaxTestStruct struct {
-		Number  int     `validate:"max=100"`
-		Float   float64 `validate:"max=50.5"`
-		String  string  `validate:"max=10"`
-		Slice   []int   `validate:"max=5"`
+		Number int     `validate:"max=100"`
+		Float  float64 `validate:"max=50.5"`
+		String string  `validate:"max=10"`
+		Slice  []int   `validate:"max=5"`
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data MaxTestStruct
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -84,14 +84,14 @@ func TestValidateMaxEdgeCases(t *testing.T) {
 // Test validateMin edge cases
 func TestValidateMinEdgeCases(t *testing.T) {
 	engine := New()
-	
+
 	type MinTestStruct struct {
-		Age     int     `validate:"min=18"`
-		Score   float64 `validate:"min=0.5"`
-		Name    string  `validate:"min=3"`
-		Items   []string `validate:"min=2"`
+		Age   int      `validate:"min=18"`
+		Score float64  `validate:"min=0.5"`
+		Name  string   `validate:"min=3"`
+		Items []string `validate:"min=2"`
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data MinTestStruct
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -128,13 +128,13 @@ func TestValidateMinEdgeCases(t *testing.T) {
 // Test validateLen with different types
 func TestValidateLenEdgeCases(t *testing.T) {
 	engine := New()
-	
+
 	type LenTestStruct struct {
-		Code    string   `validate:"len=5"`
-		Digits  []int    `validate:"len=4"`
-		Tags    []string `validate:"len=3"`
+		Code   string   `validate:"len=5"`
+		Digits []int    `validate:"len=4"`
+		Tags   []string `validate:"len=3"`
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data LenTestStruct
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -171,17 +171,17 @@ func TestValidateLenEdgeCases(t *testing.T) {
 // Test validation with nested structs
 func TestValidationNestedStructs(t *testing.T) {
 	engine := New()
-	
+
 	type Address struct {
 		Street string `validate:"required"`
 		City   string `validate:"required,min=2"`
 	}
-	
+
 	type Person struct {
-		Name    string  `validate:"required,min=2"`
+		Name    string `validate:"required,min=2"`
 		Address Address
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data Person
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -217,13 +217,13 @@ func TestValidationNestedStructs(t *testing.T) {
 // Test validation with pointer fields
 func TestValidationPointerFields(t *testing.T) {
 	engine := New()
-	
+
 	type OptionalData struct {
-		Name     *string `validate:"required"`
-		Age      *int    `validate:"min=0,max=150"`
-		Email    *string `validate:"email"`
+		Name  *string `validate:"required"`
+		Age   *int    `validate:"min=0,max=150"`
+		Email *string `validate:"email"`
 	}
-	
+
 	engine.POST("/test", func(c *Context) {
 		var data OptionalData
 		if err := c.ShouldBindJSON(&data); err != nil {
@@ -236,7 +236,7 @@ func TestValidationPointerFields(t *testing.T) {
 	name := "John"
 	age := 25
 	email := "john@example.com"
-	
+
 	tests := []struct {
 		name       string
 		data       OptionalData
@@ -250,7 +250,7 @@ func TestValidationPointerFields(t *testing.T) {
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest("POST", "/test", nil)
 		req.Header.Set("Content-Type", "application/json")
-		
+
 		// For simplicity, test with JSON strings
 		var jsonStr string
 		if tt.data.Name != nil {
@@ -258,7 +258,7 @@ func TestValidationPointerFields(t *testing.T) {
 		} else {
 			jsonStr = `{"age":25}`
 		}
-		
+
 		req = httptest.NewRequest("POST", "/test", strings.NewReader(jsonStr))
 		req.Header.Set("Content-Type", "application/json")
 		engine.ServeHTTP(w, req)

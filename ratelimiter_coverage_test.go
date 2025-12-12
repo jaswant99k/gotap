@@ -9,7 +9,7 @@ import (
 // Test rate limiter Reset method
 func TestRateLimiterReset(t *testing.T) {
 	engine := New()
-	
+
 	config := RateLimiterConfig{
 		Max:    2,
 		Window: 1 * time.Minute,
@@ -17,10 +17,10 @@ func TestRateLimiterReset(t *testing.T) {
 			return "test-key"
 		},
 	}
-	
+
 	limiter := RateLimiterWithConfig(config)
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -30,7 +30,7 @@ func TestRateLimiterReset(t *testing.T) {
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest("GET", "/test", nil)
 		engine.ServeHTTP(w, req)
-		
+
 		if w.Code != 200 {
 			t.Errorf("Request %d: Expected 200, got %d", i+1, w.Code)
 		}
@@ -40,7 +40,7 @@ func TestRateLimiterReset(t *testing.T) {
 	w := httptest.NewRecorder()
 	req := httptest.NewRequest("GET", "/test", nil)
 	engine.ServeHTTP(w, req)
-	
+
 	if w.Code != 429 {
 		t.Errorf("Expected 429 (rate limited), got %d", w.Code)
 	}
@@ -49,7 +49,7 @@ func TestRateLimiterReset(t *testing.T) {
 // Test rate limiter cleanup function
 func TestRateLimiterCleanup(t *testing.T) {
 	engine := New()
-	
+
 	config := RateLimiterConfig{
 		Max:    10,
 		Window: 1 * time.Minute,
@@ -57,10 +57,10 @@ func TestRateLimiterCleanup(t *testing.T) {
 			return c.ClientIP()
 		},
 	}
-	
+
 	limiter := RateLimiterWithConfig(config)
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -82,10 +82,10 @@ func TestRateLimiterCleanup(t *testing.T) {
 // Test RateLimiterByAPIKey with missing key
 func TestRateLimiterByAPIKeyMissing(t *testing.T) {
 	engine := New()
-	
+
 	limiter := RateLimiterByAPIKey(5, 1*time.Minute, "X-API-Key")
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -104,10 +104,10 @@ func TestRateLimiterByAPIKeyMissing(t *testing.T) {
 // Test RateLimiterByAPIKey with key
 func TestRateLimiterByAPIKeyWithKey(t *testing.T) {
 	engine := New()
-	
+
 	limiter := RateLimiterByAPIKey(2, 1*time.Minute, "X-API-Key")
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -118,7 +118,7 @@ func TestRateLimiterByAPIKeyWithKey(t *testing.T) {
 		req := httptest.NewRequest("GET", "/test", nil)
 		req.Header.Set("X-API-Key", "test-key-123")
 		engine.ServeHTTP(w, req)
-		
+
 		if w.Code != 200 {
 			t.Errorf("Request %d: Expected 200, got %d", i+1, w.Code)
 		}
@@ -129,7 +129,7 @@ func TestRateLimiterByAPIKeyWithKey(t *testing.T) {
 	req := httptest.NewRequest("GET", "/test", nil)
 	req.Header.Set("X-API-Key", "test-key-123")
 	engine.ServeHTTP(w, req)
-	
+
 	if w.Code != 429 {
 		t.Errorf("Expected 429, got %d", w.Code)
 	}
@@ -138,10 +138,10 @@ func TestRateLimiterByAPIKeyWithKey(t *testing.T) {
 // Test BurstRateLimiter edge cases
 func TestBurstRateLimiterEdgeCases(t *testing.T) {
 	engine := New()
-	
+
 	limiter := BurstRateLimiter(5, 1.0) // burst of 5, refill 1 per second
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -152,7 +152,7 @@ func TestBurstRateLimiterEdgeCases(t *testing.T) {
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest("GET", "/test", nil)
 		engine.ServeHTTP(w, req)
-		
+
 		if w.Code == 200 {
 			successCount++
 		}
@@ -167,17 +167,17 @@ func TestBurstRateLimiterEdgeCases(t *testing.T) {
 // Test rate limiter with different IPs
 func TestRateLimiterMultipleIPs(t *testing.T) {
 	engine := New()
-	
+
 	limiter := RateLimiter(2, 1*time.Minute) // 2 requests per minute
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
 
 	// Different IPs should have separate limits
 	ips := []string{"192.168.1.1", "192.168.1.2", "192.168.1.3"}
-	
+
 	for _, ip := range ips {
 		// Each IP should be able to make 2 requests
 		for i := 0; i < 2; i++ {
@@ -185,7 +185,7 @@ func TestRateLimiterMultipleIPs(t *testing.T) {
 			req := httptest.NewRequest("GET", "/test", nil)
 			req.Header.Set("X-Real-IP", ip)
 			engine.ServeHTTP(w, req)
-			
+
 			if w.Code != 200 {
 				t.Errorf("IP %s request %d: Expected 200, got %d", ip, i+1, w.Code)
 			}
@@ -196,7 +196,7 @@ func TestRateLimiterMultipleIPs(t *testing.T) {
 // Test rate limiter allow function edge cases
 func TestRateLimiterAllowFunction(t *testing.T) {
 	engine := New()
-	
+
 	// Very restrictive rate limit
 	config := RateLimiterConfig{
 		Max:    1,
@@ -205,10 +205,10 @@ func TestRateLimiterAllowFunction(t *testing.T) {
 			return "single-key"
 		},
 	}
-	
+
 	limiter := RateLimiterWithConfig(config)
 	engine.Use(limiter)
-	
+
 	engine.GET("/test", func(c *Context) {
 		c.String(200, "ok")
 	})
@@ -217,7 +217,7 @@ func TestRateLimiterAllowFunction(t *testing.T) {
 	w1 := httptest.NewRecorder()
 	req1 := httptest.NewRequest("GET", "/test", nil)
 	engine.ServeHTTP(w1, req1)
-	
+
 	if w1.Code != 200 {
 		t.Errorf("First request: Expected 200, got %d", w1.Code)
 	}
@@ -226,7 +226,7 @@ func TestRateLimiterAllowFunction(t *testing.T) {
 	w2 := httptest.NewRecorder()
 	req2 := httptest.NewRequest("GET", "/test", nil)
 	engine.ServeHTTP(w2, req2)
-	
+
 	if w2.Code != 429 {
 		t.Errorf("Second request: Expected 429, got %d", w2.Code)
 	}

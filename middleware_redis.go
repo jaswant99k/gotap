@@ -366,8 +366,9 @@ func MustGetSession(c *Context) *Session {
 
 // generateSessionID creates a unique session ID
 func generateSessionID() string {
-	// Use timestamp + random hash for uniqueness
-	data := fmt.Sprintf("%d-%d", time.Now().UnixNano(), time.Now().Unix())
+	// Use timestamp + random nanotime for uniqueness
+	timestamp := time.Now().UnixNano()
+	data := fmt.Sprintf("%d-%d", timestamp, timestamp/1000000)
 	hash := sha256.Sum256([]byte(data))
 	return hex.EncodeToString(hash[:16]) // Use first 16 bytes (32 hex chars)
 }

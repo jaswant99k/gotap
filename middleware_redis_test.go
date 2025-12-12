@@ -3,8 +3,8 @@ package goTap
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -468,7 +468,7 @@ func TestRedisHealthCheck(t *testing.T) {
 		t.Errorf("Expected status 200, got %d", w.Code)
 	}
 
-	if !contains(w.Body.String(), "healthy") {
+	if !strings.Contains(w.Body.String(), "healthy") {
 		t.Error("Expected healthy status in response")
 	}
 }
@@ -526,6 +526,7 @@ func TestRedisPubSub(t *testing.T) {
 
 func TestGenerateSessionID(t *testing.T) {
 	id1 := generateSessionID()
+	time.Sleep(1 * time.Millisecond) // Ensure different timestamps
 	id2 := generateSessionID()
 
 	if id1 == "" {
@@ -533,7 +534,7 @@ func TestGenerateSessionID(t *testing.T) {
 	}
 
 	if id1 == id2 {
-		t.Error("Session IDs should be unique")
+		t.Errorf("Session IDs should be unique, got same ID: %s", id1)
 	}
 
 	if len(id1) != 32 {

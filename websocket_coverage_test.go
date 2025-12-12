@@ -12,7 +12,7 @@ import (
 // Test WebSocket basic functionality
 func TestWebSocketBasic(t *testing.T) {
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			// Read message
@@ -20,10 +20,10 @@ func TestWebSocketBasic(t *testing.T) {
 			if err != nil {
 				return
 			}
-			
+
 			// Echo back
 			ws.SendText(msg)
-			
+
 			// Keep connection alive briefly for client to read
 			time.Sleep(100 * time.Millisecond)
 		})
@@ -62,7 +62,7 @@ func TestWebSocketBasic(t *testing.T) {
 // Test WebSocket with config
 func TestWebSocketWithConfig(t *testing.T) {
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		config := WebSocketConfig{
 			ReadBufferSize:  2048,
@@ -89,7 +89,7 @@ func TestWebSocketWithConfig(t *testing.T) {
 
 	testMsg := "configured"
 	ws.WriteMessage(websocket.TextMessage, []byte(testMsg))
-	
+
 	ws.SetReadDeadline(time.Now().Add(2 * time.Second))
 	_, msg, err := ws.ReadMessage()
 	if err != nil {
@@ -103,19 +103,19 @@ func TestWebSocketWithConfig(t *testing.T) {
 // Test WebSocket JSON messages
 func TestWebSocketJSON(t *testing.T) {
 	engine := New()
-	
+
 	type Message struct {
 		Type string `json:"type"`
 		Data string `json:"data"`
 	}
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			var msg Message
 			if err := ws.ReadJSON(&msg); err != nil {
 				return
 			}
-			
+
 			// Echo back as JSON
 			ws.SendJSON(msg)
 		})
@@ -155,12 +155,12 @@ func TestWebSocketHub(t *testing.T) {
 	defer hub.Close()
 
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			hub.Register(ws)
 			defer hub.Unregister(ws)
-			
+
 			// Keep connection alive
 			for {
 				_, _, err := ws.Conn.ReadMessage()
@@ -176,7 +176,7 @@ func TestWebSocketHub(t *testing.T) {
 
 	// Connect two clients
 	wsURL := "ws" + strings.TrimPrefix(server.URL, "http") + "/ws"
-	
+
 	ws1, _, err := websocket.DefaultDialer.Dial(wsURL, nil)
 	if err != nil {
 		t.Fatalf("Client 1 failed to connect: %v", err)
@@ -215,16 +215,16 @@ func TestWebSocketHubBroadcastJSON(t *testing.T) {
 	defer hub.Close()
 
 	engine := New()
-	
+
 	type TestMsg struct {
 		Message string `json:"message"`
 	}
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			hub.Register(ws)
 			defer hub.Unregister(ws)
-			
+
 			// Keep connection alive
 			for {
 				_, _, err := ws.Conn.ReadMessage()
@@ -239,7 +239,7 @@ func TestWebSocketHubBroadcastJSON(t *testing.T) {
 	defer server.Close()
 
 	wsURL := "ws" + strings.TrimPrefix(server.URL, "http") + "/ws"
-	
+
 	ws1, _, err := websocket.DefaultDialer.Dial(wsURL, nil)
 	if err != nil {
 		t.Fatalf("Failed to connect: %v", err)
@@ -264,18 +264,18 @@ func TestWebSocketHubBroadcastJSON(t *testing.T) {
 // Test WebSocket Close and IsClosed
 func TestWebSocketClose(t *testing.T) {
 	engine := New()
-	
+
 	closed := false
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			if ws.IsClosed() {
 				t.Error("Connection should not be closed initially")
 			}
-			
+
 			// Read one message
 			ws.ReadText()
-			
+
 			// Close connection
 			ws.Close()
 			closed = ws.IsClosed()
@@ -304,13 +304,13 @@ func TestWebSocketClose(t *testing.T) {
 // Test WebSocket deadlines
 func TestWebSocketDeadlines(t *testing.T) {
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			// Set deadlines
 			ws.SetReadDeadline(time.Now().Add(5 * time.Second))
 			ws.SetWriteDeadline(time.Now().Add(5 * time.Second))
-			
+
 			// Echo message
 			msg, _ := ws.ReadText()
 			ws.SendText(msg)
@@ -331,7 +331,7 @@ func TestWebSocketDeadlines(t *testing.T) {
 
 	testMsg := "deadline test"
 	ws.WriteMessage(websocket.TextMessage, []byte(testMsg))
-	
+
 	ws.SetReadDeadline(time.Now().Add(2 * time.Second))
 	_, msg, err := ws.ReadMessage()
 	if err != nil {
@@ -346,7 +346,7 @@ func TestWebSocketDeadlines(t *testing.T) {
 // Test WebSocket Send method
 func TestWebSocketSend(t *testing.T) {
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			// Use Send method (raw bytes)
@@ -369,7 +369,7 @@ func TestWebSocketSend(t *testing.T) {
 
 	testMsg := "send test"
 	ws.WriteMessage(websocket.TextMessage, []byte(testMsg))
-	
+
 	ws.SetReadDeadline(time.Now().Add(2 * time.Second))
 	_, msg, err := ws.ReadMessage()
 	if err != nil {
@@ -383,7 +383,7 @@ func TestWebSocketSend(t *testing.T) {
 // Test WebSocket upgrade validation
 func TestWebSocketUpgrade(t *testing.T) {
 	engine := New()
-	
+
 	engine.GET("/ws", func(c *Context) {
 		c.WebSocket(func(ws *WebSocketConn) {
 			ws.SendText("upgraded")
@@ -396,7 +396,7 @@ func TestWebSocketUpgrade(t *testing.T) {
 	// Try regular HTTP request (should fail upgrade)
 	wsURL := "ws" + strings.TrimPrefix(server.URL, "http") + "/ws"
 	ws, resp, err := websocket.DefaultDialer.Dial(wsURL, nil)
-	
+
 	if err != nil {
 		// Expected - might fail upgrade
 		t.Logf("Upgrade test: %v", err)

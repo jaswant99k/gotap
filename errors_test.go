@@ -41,7 +41,7 @@ func TestErrorJSON(t *testing.T) {
 	}
 
 	jsonResult := err.JSON()
-	
+
 	// JSON returns interface{}, should be a map
 	if result, ok := jsonResult.(H); ok {
 		if result["error"] != "test error" {
@@ -165,7 +165,7 @@ func TestErrorMsgsJSON(t *testing.T) {
 	}
 
 	jsonResult := errs.JSON()
-	
+
 	// JSON returns interface{}, should be a slice for multiple errors
 	if result, ok := jsonResult.([]interface{}); ok {
 		if len(result) != 2 {
@@ -181,7 +181,7 @@ func TestErrorMsgsJSON(t *testing.T) {
 	} else {
 		t.Errorf("Expected JSON result to be a slice, got %T", jsonResult)
 	}
-	
+
 	// Test single error case
 	singleErr := errorMsgs{
 		{Err: errors.New("single error"), Type: ErrorTypePublic},
