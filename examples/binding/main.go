@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 // Transaction represents a POS transaction

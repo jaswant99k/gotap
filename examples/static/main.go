@@ -3,7 +3,7 @@ package main
 import (
 	"path/filepath"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 func main() {

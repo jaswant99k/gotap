@@ -7,12 +7,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	_ "github.com/yourusername/goTap/examples/swagger/docs" // swagger docs
+	_ "github.com/jaswant99k/gotap/examples/swagger/docs" // swagger docs
 )
 
 // @title           goTap Swagger Example API
@@ -21,7 +21,7 @@ import (
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   goTap API Support
-// @contact.url    https://github.com/yourusername/goTap
+// @contact.url    https://github.com/jaswant99k/gotap
 // @contact.email  support@gotap.dev
 
 // @license.name  MIT

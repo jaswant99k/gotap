@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

@@ -3,7 +3,7 @@ package auth
 import (
 	"strconv"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 // Handler contains HTTP handlers for authentication

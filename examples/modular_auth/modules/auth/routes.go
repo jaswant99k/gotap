@@ -1,6 +1,6 @@
 package auth
 
-import "github.com/yourusername/goTap"
+import "github.com/jaswant99k/gotap"
 
 // RegisterRoutes registers all authentication routes
 func RegisterRoutes(r *goTap.Engine, handler *Handler, jwtSecret string) {

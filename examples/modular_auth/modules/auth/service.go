@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 // Service contains business logic for authentication

@@ -7,7 +7,7 @@ import (
 	"gotap_modular_auth/modules/auth"
 	"gotap_modular_auth/shared/database"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 	"gorm.io/gorm"
 )
 

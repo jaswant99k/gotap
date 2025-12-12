@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/yourusername/goTap"
+	"github.com/jaswant99k/gotap"
 )
 
 type Product struct {
