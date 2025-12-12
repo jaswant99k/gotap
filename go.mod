@@ -1,4 +1,4 @@
-module github.com/yourusername/goTap
+module github.com/jaswant99k/gotap
 
 go 1.23.4
 
@@ -36,5 +36,3 @@ require (
 	gorm.io/driver/sqlite v1.5.6 // indirect
 	gorm.io/gorm v1.25.12 // indirect
 )
-
-replace github.com/yourusername/goTap => C:\goTap
