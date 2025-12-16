@@ -3,6 +3,8 @@ package goTap
 import (
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -79,6 +81,48 @@ func NewGormDB(config *DBConfig) (*gorm.DB, error) {
 
 	log.Printf("[GORM] Connected to %s database successfully", config.Driver)
 	return db, nil
+}
+
+// DBConfigFromEnv loads database configuration from environment variables
+func DBConfigFromEnv() *DBConfig {
+	config := DefaultDBConfig()
+
+	if dsn := os.Getenv("DB_DSN"); dsn != "" {
+		config.DSN = dsn
+	}
+
+	// Determine driver from DSN or explicit env var
+	// Simple heuristic: check prefix or use DB_DRIVER env
+	if driver := os.Getenv("DB_DRIVER"); driver != "" {
+		config.Driver = driver
+	} else {
+		// Default to postgres if not specified but DSN looks like postgres
+		// This is a fallback; explicit DB_DRIVER is better
+		config.Driver = "postgres"
+	}
+
+	if maxIdle := os.Getenv("DB_MAX_IDLE_CONNS"); maxIdle != "" {
+		if v, err := strconv.Atoi(maxIdle); err == nil {
+			config.MaxIdleConns = v
+		}
+	}
+
+	if maxOpen := os.Getenv("DB_MAX_OPEN_CONNS"); maxOpen != "" {
+		if v, err := strconv.Atoi(maxOpen); err == nil {
+			config.MaxOpenConns = v
+		}
+	}
+
+	return config
+}
+
+// ConnectDB connects to the database using environment variables
+func ConnectDB() (*gorm.DB, error) {
+	config := DBConfigFromEnv()
+	if config.DSN == "" {
+		return nil, fmt.Errorf("DB_DSN environment variable is required")
+	}
+	return NewGormDB(config)
 }
 
 // GormInject injects GORM database instance into context

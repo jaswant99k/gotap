@@ -29,7 +29,7 @@
     .\new-modular-project.ps1 -ProjectPath "C:\projects\myapp" -ProjectName "myapp" -Database mysql
 
 .EXAMPLE
-    .\new-modular-project.ps1 -ProjectPath "C:\projects\myapp" -UseLocal -GoTapPath "C:\goTap"
+    C:\goTap\scripts\new-modular-project.ps1 -ProjectPath "C:\projects\vervepos" -Database postgres
 
 #>
 
@@ -58,51 +58,50 @@ function Write-Warning { param($Message) Write-Host "[WARN] $Message" -Foregroun
 function Write-Error-Custom { param($Message) Write-Host "[ERROR] $Message" -ForegroundColor Red }
 function Write-Step { param($Message) Write-Host "`n[STEP] $Message" -ForegroundColor Blue }
 
-# Banner
-Write-Host @"
+# Banner / validation
+Write-Step "Validating options..."
 
+# Normalize project path
+$ProjectPath = [System.IO.Path]::GetFullPath($ProjectPath)
 
-                                                            
-      goTap Modular Project Generator v2.0                 
-      Feature-Based Architecture for Scalable Apps         
-                                                            
-
-
-"@ -ForegroundColor Magenta
-
-# Check Go version
-Write-Step "Checking Go installation..."
-$goVersion = go version 2>&1
-if ($LASTEXITCODE -ne 0) {
-    Write-Error-Custom "Go is not installed or not in PATH"
-    Write-Info "Please install Go 1.22 or later from https://go.dev/dl/"
-    exit 1
+# Auto-detect local goTap if running from within the framework
+if (-not $UseLocal -and -not $GoTapPath) {
+    $scriptPath = $PSScriptRoot
+    $potentialGoTapPath = Split-Path -Parent $scriptPath
+    if (Test-Path "$potentialGoTapPath\go.mod") {
+        $modContent = Get-Content "$potentialGoTapPath\go.mod" -Raw
+        if ($modContent -match "module github.com/jaswant99k/gotap") {
+            Write-Info "Auto-detected local goTap framework at: $potentialGoTapPath"
+            $GoTapPath = $potentialGoTapPath
+            $UseLocal = $true
+        }
+    }
 }
-Write-Info "Found: $goVersion"
 
-# Check if using local goTap or published module
 if ($UseLocal) {
-    if ([string]::IsNullOrEmpty($GoTapPath)) {
-        $GoTapPath = "C:\goTap"
-    }
-    if (-not (Test-Path $GoTapPath)) {
-        Write-Error-Custom "Local goTap path not found: $GoTapPath"
-        Write-Info "Either fix the path or run without -UseLocal to use published module"
-        exit 1
-    }
-    Write-Info "Using local goTap from: $GoTapPath"
+	if (-not $GoTapPath) {
+		Write-Error-Custom "-GoTapPath is required when using -UseLocal"
+		exit 1
+	}
+
+	if (-not (Test-Path $GoTapPath)) {
+		Write-Error-Custom "Local goTap path not found: $GoTapPath"
+		Write-Info "Either fix the path or run without -UseLocal to use published module"
+		exit 1
+	}
+
+	Write-Info "Using local goTap from: $GoTapPath"
 } else {
-    Write-Info "Using published goTap module (github.com/jaswant99k/gotap@v0.1.0)"
+	Write-Info "Using goTap from GitHub (v0.1.0)"
 }
 
 # Extract project name if not provided
 if ([string]::IsNullOrEmpty($ProjectName)) {
-    $ProjectName = Split-Path -Leaf $ProjectPath
+	$ProjectName = Split-Path -Leaf $ProjectPath
 }
 
 Write-Info "Project: $ProjectName"
 Write-Info "Location: $ProjectPath"
-Write-Info "Database: $Database"
 Write-Info "Structure: Modular feature-based"
 
 # Create project directory
@@ -116,8 +115,8 @@ if (Test-Path $ProjectPath) {
 }
 
 Write-Step "Creating project directory..."
-New-Item -ItemType Directory -Path $ProjectPath -Force | Out-Null
-Set-Location $ProjectPath
+[System.IO.Directory]::CreateDirectory($ProjectPath) | Out-Null
+Set-Location -Path $ProjectPath -ErrorAction Stop
 Write-Success "Created $ProjectPath"
 
 # Initialize Go module
@@ -129,6 +128,10 @@ go 1.23
 "@
 [System.IO.File]::WriteAllText("$ProjectPath\go.mod", $goModContent)
 Write-Success "Go module initialized with Go 1.23"
+
+# Pin Go toolchain to 1.23 for all module commands during scaffolding
+$previousGoToolchain = $env:GOTOOLCHAIN
+$env:GOTOOLCHAIN = "go1.23"
 
 # Add goTap replace directive only if using local
 if ($UseLocal) {
@@ -202,6 +205,7 @@ $envContent = @"
 SERVER_PORT=8080
 
 # Database
+DB_DRIVER=$Database
 DB_DSN=$dsnExample
 DB_MAX_IDLE_CONNS=10
 DB_MAX_OPEN_CONNS=100
@@ -224,35 +228,18 @@ package database
 
 import (
 	"log"
-	"os"
-	"time"
 
-	"gorm.io/driver/$Database"
+	"github.com/jaswant99k/gotap"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 func Connect() (*gorm.DB, error) {
-	dsn := os.Getenv("DB_DSN")
-	if dsn == "" {
-		log.Fatal("DB_DSN environment variable is required")
-	}
-
-	db, err := gorm.Open($Database.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
+	// goTap.ConnectDB() automatically loads configuration from environment variables:
+	// DB_DRIVER, DB_DSN, DB_MAX_IDLE_CONNS, DB_MAX_OPEN_CONNS
+	db, err := goTap.ConnectDB()
 	if err != nil {
 		return nil, err
 	}
-
-	sqlDB, err := db.DB()
-	if err != nil {
-		return nil, err
-	}
-
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	log.Println(" Database connected")
 	return db, nil
@@ -267,12 +254,12 @@ $authModelsContent = @"
 package auth
 
 import (
+	"github.com/jaswant99k/gotap"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
+	goTap.Model
 	Username     string       ``gorm:"uniqueIndex;not null" json:"username"``
 	Email        string       ``gorm:"uniqueIndex;not null" json:"email"``
 	PasswordHash string       ``gorm:"not null" json:"-"``
@@ -282,7 +269,7 @@ type User struct {
 }
 
 type Permission struct {
-	gorm.Model
+	goTap.Model
 	Name        string ``gorm:"uniqueIndex;not null" json:"name"``
 	Description string ``json:"description"``
 	Users       []User ``gorm:"many2many:user_permissions;" json:"-"``
@@ -638,10 +625,10 @@ Write-Success "Created modules/auth/routes.go"
 $productsModelsContent = @"
 package products
 
-import "gorm.io/gorm"
+import "github.com/jaswant99k/gotap"
 
 type Product struct {
-	gorm.Model
+	goTap.Model
 	Name        string  ``gorm:"not null" json:"name"``
 	SKU         string  ``gorm:"uniqueIndex;not null" json:"sku"``
 	Description string  ``json:"description"``
@@ -1026,19 +1013,16 @@ import (
 // @description Type "Bearer" followed by a space and JWT token.
 
 func main() {
-	// Load configuration
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
 		jwtSecret = "your-super-secret-jwt-key-minimum-32-characters-long-change-this"
 	}
 
-	// Initialize database
 	db, err := database.Connect()
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// Auto-migrate all modules
 	if err := db.AutoMigrate(
 		&auth.User{},
 		&auth.Permission{},
@@ -1047,27 +1031,20 @@ func main() {
 		log.Fatal("Failed to migrate database:", err)
 	}
 
-	// Seed data
 	seedDefaultData(db)
 
-	// Initialize goTap
 	r := goTap.Default()
 	r.Use(goTap.GormInject(db))
 
-	// Determine port
 	port := os.Getenv("SERVER_PORT")
 	if port == "" {
 		port = "8080"
 	}
 	addr := ":" + port
 
-	// Update Swagger host dynamically to match the running port
 	docs.SwaggerInfo.Host = goTap.UpdateSwaggerHost(addr)
-
-	// Setup Swagger UI
 	goTap.SetupSwagger(r, "/swagger")
 
-	// Health check
 	r.GET("/health", func(c *goTap.Context) {
 		c.JSON(200, goTap.H{
 			"status": "ok",
@@ -1075,7 +1052,6 @@ func main() {
 		})
 	})
 
-	// Initialize modules
 	initAuthModule(r, db, jwtSecret)
 	initProductsModule(r, db, jwtSecret)
 
@@ -1090,14 +1066,14 @@ func main() {
 	log.Println("  POST /api/products - Create product (admin only)")
 	log.Println()
 
-	if err := r.Run(":" + port); err != nil {
+	if err := r.Run(addr); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
-	log.Println("  POST /api/products - Create product (admin only)")
-	log.Println()
+}
 
-	if err := r.Run(addr); err != nil {
-		log.Fatal("Failed to start server:", err))
+func initAuthModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
+	repo := auth.NewRepository(db)
+	service := auth.NewService(repo, jwtSecret)
 	handler := auth.NewHandler(service)
 	auth.RegisterRoutes(r, handler, jwtSecret)
 	log.Println(" Auth module initialized")
@@ -1112,7 +1088,6 @@ func initProductsModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
 }
 
 func seedDefaultData(db *gorm.DB) {
-	// Seed permissions
 	permissions := []auth.Permission{
 		{Name: "create_product", Description: "Create new products"},
 		{Name: "edit_product", Description: "Edit existing products"},
@@ -1125,7 +1100,6 @@ func seedDefaultData(db *gorm.DB) {
 		db.FirstOrCreate(&perm, auth.Permission{Name: perm.Name})
 	}
 
-	// Create default admin user
 	var count int64
 	db.Model(&auth.User{}).Where("role = ?", "admin").Count(&count)
 
@@ -1140,7 +1114,6 @@ func seedDefaultData(db *gorm.DB) {
 		}
 
 		if err := db.Create(&admin).Error; err == nil {
-			// Assign all permissions to admin
 			var perms []auth.Permission
 			db.Find(&perms)
 			db.Model(&admin).Association("Permissions").Append(perms)
@@ -1148,7 +1121,6 @@ func seedDefaultData(db *gorm.DB) {
 		}
 	}
 
-	// Seed sample products
 	var productCount int64
 	db.Model(&products.Product{}).Count(&productCount)
 
@@ -1389,6 +1361,13 @@ if ($swagPath) {
 Write-Step "Final dependency resolution..."
 go mod tidy 2>&1 | Out-Null
 Write-Success "Project setup complete"
+
+# Restore previous Go toolchain setting
+if ($null -ne $previousGoToolchain -and $previousGoToolchain -ne "") {
+	$env:GOTOOLCHAIN = $previousGoToolchain
+} else {
+	Remove-Item Env:\GOTOOLCHAIN -ErrorAction SilentlyContinue
+}
 
 # Summary
 Write-Host "`n"
