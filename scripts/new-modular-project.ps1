@@ -230,10 +230,9 @@ import (
 	"log"
 
 	"github.com/jaswant99k/gotap"
-	"gorm.io/gorm"
 )
 
-func Connect() (*gorm.DB, error) {
+func Connect() (*goTap.DB, error) {
 	// goTap.ConnectDB() automatically loads configuration from environment variables:
 	// DB_DRIVER, DB_DSN, DB_MAX_IDLE_CONNS, DB_MAX_OPEN_CONNS
 	db, err := goTap.ConnectDB()
@@ -313,13 +312,13 @@ Write-Success "Created modules/auth/models.go"
 $authRepoContent = @"
 package auth
 
-import "gorm.io/gorm"
+import "github.com/jaswant99k/gotap"
 
 type Repository struct {
-	db *gorm.DB
+	db *goTap.DB
 }
 
-func NewRepository(db *gorm.DB) *Repository {
+func NewRepository(db *goTap.DB) *Repository {
 	return &Repository{db: db}
 }
 
@@ -655,13 +654,13 @@ Write-Success "Created modules/products/models.go"
 $productsRepoContent = @"
 package products
 
-import "gorm.io/gorm"
+import "github.com/jaswant99k/gotap"
 
 type Repository struct {
-	db *gorm.DB
+	db *goTap.DB
 }
 
-func NewRepository(db *gorm.DB) *Repository {
+func NewRepository(db *goTap.DB) *Repository {
 	return &Repository{db: db}
 }
 
@@ -990,7 +989,6 @@ import (
 	"$ProjectName/docs"
 
 	"github.com/jaswant99k/gotap"
-	"gorm.io/gorm"
 )
 
 // @title           $ProjectName API
@@ -1071,7 +1069,7 @@ func main() {
 	}
 }
 
-func initAuthModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
+func initAuthModule(r *goTap.Engine, db *goTap.DB, jwtSecret string) {
 	repo := auth.NewRepository(db)
 	service := auth.NewService(repo, jwtSecret)
 	handler := auth.NewHandler(service)
@@ -1079,7 +1077,7 @@ func initAuthModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
 	log.Println(" Auth module initialized")
 }
 
-func initProductsModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
+func initProductsModule(r *goTap.Engine, db *goTap.DB, jwtSecret string) {
 	repo := products.NewRepository(db)
 	service := products.NewService(repo)
 	handler := products.NewHandler(service)
@@ -1087,7 +1085,7 @@ func initProductsModule(r *goTap.Engine, db *gorm.DB, jwtSecret string) {
 	log.Println(" Products module initialized")
 }
 
-func seedDefaultData(db *gorm.DB) {
+func seedDefaultData(db *goTap.DB) {
 	permissions := []auth.Permission{
 		{Name: "create_product", Description: "Create new products"},
 		{Name: "edit_product", Description: "Edit existing products"},

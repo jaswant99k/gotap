@@ -14,6 +14,9 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// DB is a type alias for gorm.DB, allowing users to use goTap.DB
+type DB = gorm.DB
+
 // DBConfig holds database configuration
 type DBConfig struct {
 	Driver          string        // "mysql", "postgres", "sqlite"
@@ -35,7 +38,7 @@ func DefaultDBConfig() *DBConfig {
 }
 
 // NewGormDB creates a new GORM database connection
-func NewGormDB(config *DBConfig) (*gorm.DB, error) {
+func NewGormDB(config *DBConfig) (*DB, error) {
 	if config == nil {
 		config = DefaultDBConfig()
 	}
@@ -117,7 +120,7 @@ func DBConfigFromEnv() *DBConfig {
 }
 
 // ConnectDB connects to the database using environment variables
-func ConnectDB() (*gorm.DB, error) {
+func ConnectDB() (*DB, error) {
 	config := DBConfigFromEnv()
 	if config.DSN == "" {
 		return nil, fmt.Errorf("DB_DSN environment variable is required")
@@ -126,7 +129,7 @@ func ConnectDB() (*gorm.DB, error) {
 }
 
 // GormInject injects GORM database instance into context
-func GormInject(db *gorm.DB) HandlerFunc {
+func GormInject(db *DB) HandlerFunc {
 	return func(c *Context) {
 		c.Set("gorm", db)
 		c.Next()
@@ -134,12 +137,12 @@ func GormInject(db *gorm.DB) HandlerFunc {
 }
 
 // GetGorm retrieves GORM database from context
-func GetGorm(c *Context) (*gorm.DB, bool) {
+func GetGorm(c *Context) (*DB, bool) {
 	db, exists := c.Get("gorm")
 	if !exists {
 		return nil, false
 	}
-	gormDB, ok := db.(*gorm.DB)
+	gormDB, ok := db.(*DB)
 	return gormDB, ok
 }
 
